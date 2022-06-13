@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.starking.cerveja.model.Cerveja;
+
 @Controller
 public class CervejaController {
 	
@@ -13,7 +15,7 @@ public class CervejaController {
 	}
 	
 	@RequestMapping(value = "/cerveja/novo" , method = RequestMethod.POST)
-	public void cadastrar() {
+	public void cadastrar(Cerveja cerveja) {
 		
 	}
 
