@@ -1,8 +1,15 @@
 package com.starking.cerveja.model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Cerveja {
 	
+	@NotBlank
 	private String sku;
+	
+	@NotNull
 	private String nome;
 		
 	public String getSku() {
