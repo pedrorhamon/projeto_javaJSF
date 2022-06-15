@@ -20,7 +20,7 @@ public class CervejaController {
 	@RequestMapping(value = "/cerveja/novo" , method = RequestMethod.POST)
 	public void cadastrar(@Valid Cerveja cerveja, BindingResult result) {
 		if(result.hasErrors()) {
-			System.out.println(">>>>>>> Erri");
+	
 		}
 	}
 
