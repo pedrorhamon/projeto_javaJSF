@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns="http://www.thymeleaf.org">
 
 <body>
 	<h1>Ola Mundo!</h1>
-
 </body>
+	<form method="POST">
+		<span th:text="${mensagem}"></span>
+	</form>
 
 </html>
