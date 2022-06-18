@@ -1,20 +1,18 @@
 package com.starking.cerveja.model;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 public class Cerveja {
 	
-	@NotBlank
+	@NotBlank(message = "SKU é obrigatório")
 	private String sku;
 	
-	@NotNull
+	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 	
-	@NotNull
-	@Size(max = 50)
+	@Size(max = 50, message = "A descrição deve estar entre 1 e 50")
 	private String descricao;
 		
 	public String getSku() {

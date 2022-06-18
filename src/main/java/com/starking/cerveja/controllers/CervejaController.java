@@ -15,15 +15,18 @@ import com.starking.cerveja.model.Cerveja;
 public class CervejaController {
 	
 	@RequestMapping("/cervejas/novo")
-	public String novo() {
+	public String novo(Cerveja cerveja) {
 		return "cerveja/CadastroCerveja";
 	}
 	
 	@RequestMapping(value = "/cerveja/novo" , method = RequestMethod.POST)
-	public void cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+	public String cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()) {
-			model.addAttribute("mensagem", "Erro no Formulario");	
+			return novo(cerveja);
 		}
-		redirectAttributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
+		
+		redirectAttributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso");
+		System.out.println(">>>> sku: " + cerveja.getSku());
+		return "redirect:/cerveja/novo";
 	}
 }
