@@ -29,4 +29,9 @@ public class CervejaController {
 		System.out.println(">>>> sku: " + cerveja.getSku());
 		return "redirect:/cerveja/novo";
 	}
+	
+	@RequestMapping("/cervejas/cadastro")
+	public String cadastro() {
+		return "cerveja/cadastro-produto";
+	}
 }
