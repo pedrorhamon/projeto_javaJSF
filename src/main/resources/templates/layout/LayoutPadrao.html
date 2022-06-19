@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="'/layout/LayoutPadrao'">
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<meta charset="UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -10,9 +9,9 @@
 
 	<title>Cerveja</title>
 
-	<link rel="stylesheet" type="text/css" href="assets/stylesheets/vendors.min.css"/>
-	<link rel="stylesheet" type="text/css" href="assets/stylesheets/algaworks.min.css"/>
-	<link rel="stylesheet" type="text/css" href="assets/stylesheets/application.css"/>
+	<link rel="stylesheet" type="text/css" href="/cerveja/layout/stylesheets/vendors.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/cerveja/layout/stylesheets/algaworks.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/cerveja/layout/stylesheets/application.css"/>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,9 +20,8 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body>
-
-<div class="aw-layout-loading  js-loading-overlay">
+		<body>
+				<div class="aw-layout-loading  js-loading-overlay">
 	<div class="aw-layout-loading__container">
 		<span class="aw-balls-spinner">Carregando...</span>
 	</div>
@@ -36,7 +34,7 @@
 
 	    <div class="navbar-header">
 	      <a class="navbar-brand  hidden-xs" href="#">
-	        <img alt="Cerveja" src="/cerveja/images/logo.png"/>
+	        <img alt="Cerveja" src="/layout/images/logo-gray.png"/>
 	      </a>
 
 	      <ul class="nav  navbar-nav">
@@ -136,105 +134,18 @@
 		</div>
 	</aside>
 
-	<section class="aw-layout-content  js-content">
-
-
-<div class="page-header">
-	<div class="container-fluid">
-		<h1>
-			Cadastro de produto
-		</h1>
-	</div>
-</div>
-
-<div class="container-fluid">
-
-	<div class="alert  alert-danger  alert-dismissible" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<i class="fa  fa-exclamation-circle"></i> Já existe um produto com o nome informado.
-	</div>
-
-	<form method="get" class="form-vertical  js-form-loading">
-		
-		<div class="form-group">
-			<label for="input-produto-nome">Nome</label>
-			<input id="input-produto-nome" type="text" class="form-control"/>
-		</div>
-
-		<div class="form-group">
-			<label for="input-produto-descricao">Descrição</label>
-			<textarea id="input-produto-descricao" rows="3" class="form-control"></textarea>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-3">
-				<div class="form-group">
-					<label for="input-produto-preco">Preço unitário</label>
-					<input id="input-produto-preco" type="text" class="form-control" placeholder="R$"/>
-				</div>
-			</div>
-			
-			<div class="col-sm-3">
-				<div class="form-group">
-					<label for="input-produto-estoque">Estoque</label>
-					<input id="input-produto-estoque" type="text" class="form-control" placeholder="Unidades"/>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<button class="btn  btn-primary" type="submit">Salvar</button>
-			<a href="pesquisa-produtos.html" class="btn  btn-default">Cancelar</a>
-			<a href="#" class="btn  btn-link  aw-btn-link-danger" onclick="excluir()">Excluir este produto</a>
-		</div>
-
-	</form>
-</div>
-
-<script>
-function excluir() {
-	swal({
-		title: "Tem certeza?",
-		text: "Você não poderá recuperar o produto após a exclusão.",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#DD6B55",
-		confirmButtonText: "Sim, exclua agora!",
-		closeOnConfirm: false,
-		showLoaderOnConfirm: true
-	}, function() {
-		setTimeout(function() {
-			swal("Excluído!", "O produto foi excluído com sucesso.", "success");
-		}, 2000);
-	});
-}
-</script>
-
-	</section>
+	<section class="aw-layout-content  js-content" layout:fragment="conteudo"></section>
 	
 	<footer class="aw-layout-footer  js-content">
 		<div class="container-fluid">
-			<span class="aw-footer-disclaimer">&copy; 2016 AlgaWorks. Todos os direitos reservados.</span>
+			<span class="aw-footer-disclaimer">&copy; 2022 StarKing.
+				Todos os direitos reservados.</span>
 		</div>
 	</footer>
-
-</div>
-
-<div class="aw-search-modal  js-search-modal">
-	<form action="#" class="aw-search-modal__form">
-		<input class="aw-search-modal__input  js-search-modal-input" type="text" placeholder="O que você está procurando?"/>
-		<div class="aw-search-modal__input-icon">
-			<i class="glyphicon  glyphicon-search  js-search-modal-go"></i>
-		</div>
-	</form>
-	
-	<div class="aw-search-modal__controls">
-		<i class="glyphicon glyphicon-remove  js-search-modal-close"></i>
 	</div>
-</div>
-
-<script src="assets/javascripts/vendors.min.js"></script>
-<script src="assets/javascripts/algaworks.min.js"></script>
-
+	
+	<script src="/cerveja/layout/javascripts/vendors.min.js"></script>
+	<script src="/cerveja/layout/javascripts/algaworks.min.js"></script>
+		
 </body>
 </html>
