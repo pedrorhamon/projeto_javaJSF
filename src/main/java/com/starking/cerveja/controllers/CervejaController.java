@@ -26,7 +26,6 @@ public class CervejaController {
 		}
 		
 		redirectAttributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso");
-		System.out.println(">>>> sku: " + cerveja.getSku());
 		return "redirect:/cerveja/novo";
 	}
 }
