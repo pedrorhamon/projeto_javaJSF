@@ -24,7 +24,6 @@ public class CervejaController {
 		if(result.hasErrors()) {
 			return novo(cerveja);
 		}
-		
 		redirectAttributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso");
 		return "redirect:/cerveja/novo";
 	}
