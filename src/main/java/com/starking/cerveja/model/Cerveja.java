@@ -12,7 +12,7 @@ public class Cerveja {
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 
-	@Size(max = 55, message = "A descrição deve estar entre 1 e 55")
+	@Size(max = 50, message = "A descrição deve estar entre 1 e 50")
 	private String descricao;
 
 	public String getSku() {
