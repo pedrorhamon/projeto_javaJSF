@@ -28,74 +28,54 @@
 			</div>
 			
 			<div class="row">
-				<div class="form-group  col-sm-4">
-					<label>Email</label> 
-					<div>
-						<div class="radio  radio-inline">
-							<input type="radio" name="tipoPessoa"> 
-							<label>Física</label>
-						</div>
-						<div class="radio  radio-inline">
-							<input type="radio" name="tipoPessoa"> 
-							<label>Juridica</label>
-						</div>
-					</div>
-				</div>
-				
-				<div class="form-group  col-sm-8" >
-					<label for="cpfOuCnpj">CPF/CNPJ</label>
-					<input type="text" class="form-control" id="cpfOuCnpj"/>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="form-group  col-sm-4">
-					<label for="telefone">Telefone</label>
-					<input type="text" class="form-control" id="telefone"/>
-				</div>
-				
 				<div class="form-group  col-sm-8">
 					<label for="email">E-mail</label>
 					<input type="text" class="form-control" id="email"/>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="form-group  col-sm-4">
-					<label for="logradouro">Logradouro</label>
-					<input type="text" class="form-control" id="logradouro"/>
-				</div>
 				
-				<div class="form-group  col-sm-4">
-					<label for="numero">Número</label>
-					<input type="text" class="form-control" id="numero"/>
-				</div>
-				
-				<div class="form-group  col-sm-4">
-					<label for="complemento">Complemento</label>
-					<input type="text" class="form-control" id="complemento"/>
+				<div class="form-group  col-sm-4" >
+					<label for="dataNascimento">Data de Nascimento</label>
+					<input type="text" class="form-control" id="dataNascimento"/>
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="form-group  col-sm-4">
-					<label for="cep">CEP</label>
-					<input type="text" class="form-control" id="cep"/>
+					<label for="senha">Senha</label>
+					<input type="text" class="form-control" id="senha"/>
 				</div>
 				
 				<div class="form-group  col-sm-4">
-					<label for="estado">Estado</label>
-					<select id="estado" class="form-control">
-	                    <option value="">Selecione o estado</option>
-	                </select>
+					<label for="confirmaSenha">Confirmação de senha</label>
+					<input type="text" class="form-control" id="confirmaSenha"/>
 				</div>
 				
-				<div class="form-group  col-sm-4">
-					<label  for="cidade">Cidade</label>
-					<select id="cidade" class="form-control">
-						<option value="">Selecione a cidade</option>
-					</select>
-				</div>
+				<div class="col-lg-3 col-sm-6 form-group">
+							<label for="status">Status</label>
+							<div>
+								<div class="checkbox checkbox-inline">
+									<input type="checkbox" name="status">
+									 <label>ativo</label>
+								</div>
+							</div>
+						</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-lg-3 col-sm-6 form-group">
+							<label for="grupo">Grupos</label>
+							<div>
+								<div class="checkbox checkbox-inline">
+									<input type="checkbox" name="grupo">
+									 <label>Administração</label>
+								</div>
+								<div class="checkbox checkbox-inline">
+									<input type="checkbox" name="grupo">
+									 <label>Vendedor</label>
+								</div>
+							</div>
+						</div>
 			</div>
 			
 			<button type="submit" class="btn  btn-primary">Salvar</button>				
