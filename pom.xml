@@ -26,6 +26,8 @@
 		<hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
 
 		<hibernate.version>5.1.0.Final</hibernate.version>
+		
+		<spring-data-jpa.version>1.10.2.RELEASE</spring-data-jpa.version>
 
 	</properties>
 
@@ -144,6 +146,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data-jpa.version}</version>
+		</dependency>
+
 
 	</dependencies>
 
