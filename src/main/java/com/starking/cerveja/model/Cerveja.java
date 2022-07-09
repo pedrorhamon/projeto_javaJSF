@@ -17,8 +17,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.starking.cerveja.model.enums.OrigemEnum;
-import com.starking.cerveja.model.enums.SaborEnum;
+import com.starking.cerveja.model.enums.Origem;
+import com.starking.cerveja.model.enums.Sabor;
 
 @Entity
 @Table(name = "cerveja")
@@ -48,10 +48,10 @@ public class Cerveja {
 	private Integer quantidadeEstoque;
 	
 	@Enumerated(EnumType.STRING)
-	private OrigemEnum origemEnum;
+	private Origem origem;
 	
 	@Enumerated(EnumType.STRING)
-	private SaborEnum sabor;
+	private Sabor sabor;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_estilo")
@@ -121,19 +121,19 @@ public class Cerveja {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-	public OrigemEnum getOrigemEnum() {
-		return origemEnum;
+	public Origem getOrigem() {
+		return origem;
 	}
 
-	public void setOrigemEnum(OrigemEnum origemEnum) {
-		this.origemEnum = origemEnum;
+	public void setOrigem(Origem origem) {
+		this.origem = origem;
 	}
 
-	public SaborEnum getSabor() {
+	public Sabor getSabor() {
 		return sabor;
 	}
 
-	public void setSabor(SaborEnum sabor) {
+	public void setSabor(Sabor sabor) {
 		this.sabor = sabor;
 	}
 

@@ -1,6 +1,6 @@
 package com.starking.cerveja.model.enums;
 
-public enum SaborEnum {
+public enum Sabor {
 	
 	ADOCICADA("Adocicada"),
 	AMARGA("Amarga"),
@@ -10,7 +10,7 @@ public enum SaborEnum {
 	
 	private String descricao;
 	
-	SaborEnum(String descricao) {
+	Sabor(String descricao) {
 		this.descricao = descricao;
 	}
 	

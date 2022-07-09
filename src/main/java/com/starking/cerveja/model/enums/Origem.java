@@ -1,13 +1,13 @@
 package com.starking.cerveja.model.enums;
 
-public enum OrigemEnum {
+public enum Origem {
 	
 	NACIONAL("Nacional"), 
 	INTERNACIONAL("Internacional");
 	
 	private String descricao;
 	
-	OrigemEnum(String descricao) {
+	Origem(String descricao) {
 		this.descricao = descricao;
 	}
 	

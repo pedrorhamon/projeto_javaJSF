@@ -1,7 +1,5 @@
 package com.starking.cerveja.controllers;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +12,37 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.model.Cerveja;
-import com.starking.cerveja.model.enums.OrigemEnum;
-import com.starking.cerveja.model.enums.SaborEnum;
-import com.starking.cerveja.repositories.CervejaRepository;
+import com.starking.cerveja.model.enums.Origem;
+import com.starking.cerveja.model.enums.Sabor;
 import com.starking.cerveja.repositories.EstiloRepository;
+import com.starking.cerveja.services.CadastroCervejaService;
 
 @Controller
 public class CervejaController {
 	
 	@Autowired
-	private CervejaRepository cervejaRepository;
+	private CadastroCervejaService cervejaService;
 	
 	@Autowired
 	private EstiloRepository estiloRepository;
 	
 	@RequestMapping("/cervejas/novo")
 	public ModelAndView novo(Cerveja cerveja) {
-//		Optional<Cerveja> cervejaOptional = cervejaRepository.findBySkuIgnoreCase("111154");
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
-		mv.addObject("sabores", SaborEnum.values());
-		mv.addObject("estilos", this.estiloRepository.findAll());
-		mv.addObject("origens", OrigemEnum.values());
+		mv.addObject("sabores", Sabor.values());
+		mv.addObject("estilos", estiloRepository.findAll());
+		mv.addObject("origens", Origem.values());
 		return mv;
 	}
 	
-	@RequestMapping(value = "/cerveja/novo" , method = RequestMethod.POST)
-	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()) {
+	@RequestMapping(value = "/cervejas/novo", method = RequestMethod.POST)
+	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
+		if (result.hasErrors()) {
 			return novo(cerveja);
 		}
-		redirectAttributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso");
-		return new ModelAndView("redirect:/cerveja/novo");
+		
+		cervejaService.salvar(cerveja);
+		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
+		return new ModelAndView("redirect:/cervejas/novo");
 	}
 }

@@ -14,13 +14,15 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.repositories.CervejaRepository;
 
 @Configuration
-@EnableJpaRepositories(basePackageClasses = CervejaRepository.class)
+@EnableJpaRepositories(basePackageClasses = CervejaRepository.class, enableDefaultTransactions = false)
 @ComponentScan(basePackageClasses = CervejaRepository.class)
+@EnableTransactionManagement
 public class JPAConfig {
 
 	@Bean
