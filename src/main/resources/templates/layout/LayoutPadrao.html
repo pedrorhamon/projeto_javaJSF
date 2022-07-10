@@ -41,13 +41,15 @@
 	<div th:replace="layout/fragments/Footer :: layout-footer"></div>
 	
 </div>
-	
+
 	<script th:src="@{/layout/javascripts/vendors.min.js}"></script>
 	<script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
-	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.min.js}"></script>
+
 	<script th:src="@{/javascripts/vendors/cerveja.js}"></script>
-	
-	 	<th:block layout:fragment="javascript-extra"></th:block>
-		
-	</body>
+
+	<th:block layout:fragment="javascript-extra"></th:block>
+
+</body>
 </html>
