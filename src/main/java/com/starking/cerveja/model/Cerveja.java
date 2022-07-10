@@ -19,6 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.starking.cerveja.model.enums.Origem;
 import com.starking.cerveja.model.enums.Sabor;
+import com.starking.cerveja.validation.SKU;
 
 @Entity
 @Table(name = "cerveja")
@@ -28,6 +29,7 @@ public class Cerveja {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@SKU
 	@NotBlank(message = "SKU é obrigatório")
 	private String sku;
 
