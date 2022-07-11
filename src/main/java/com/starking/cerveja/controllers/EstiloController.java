@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.cerveja.exception.NomeEstiloException;
 import com.starking.cerveja.model.Estilo;
 import com.starking.cerveja.services.CadastroEstiloService;
 
@@ -30,7 +31,12 @@ public class EstiloController {
 			return novo(estilo);
 		}
 		
-		estiloService.salvar(estilo);
+		try {			
+			estiloService.salvar(estilo);
+		} catch(NomeEstiloException ex) {
+			result.rejectValue("nome", ex.getMessage(), ex.getMessage());
+			return this.novo(estilo);
+		}
 		attributes.addFlashAttribute("mensagem", "Estilo salvo com sucesso");
 		return new ModelAndView("redirect:/estilos/novo");
 	}

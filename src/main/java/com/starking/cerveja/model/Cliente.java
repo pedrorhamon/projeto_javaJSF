@@ -85,4 +85,12 @@ public class Cliente {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+
+	public Cerveja getCerveja() {
+		return cerveja;
+	}
+
+	public void setCerveja(Cerveja cerveja) {
+		this.cerveja = cerveja;
+	}
 }
