@@ -3,10 +3,15 @@ package com.starking.cerveja.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,13 +36,29 @@ public class EstiloController {
 			return novo(estilo);
 		}
 		
-		try {			
-			estiloService.salvar(estilo);
-		} catch(NomeEstiloException ex) {
-			result.rejectValue("nome", ex.getMessage(), ex.getMessage());
-			return this.novo(estilo);
+		try {
+			this.estiloService.salvar(estilo);
+		} catch (NomeEstiloException e) {
+			result.rejectValue("nome", e.getMessage(), e.getMessage());
+			return novo(estilo);
 		}
+		
 		attributes.addFlashAttribute("mensagem", "Estilo salvo com sucesso");
 		return new ModelAndView("redirect:/estilos/novo");
+	}
+	
+	@RequestMapping(value = "/estilos", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody ResponseEntity<?> salvar(@RequestBody @Valid Estilo estilo, BindingResult result) {
+		if (result.hasErrors()) {
+			return ResponseEntity.badRequest().body(result.getFieldError("nome").getDefaultMessage());
+		}
+		
+		try {
+			estilo = this.estiloService.salvar(estilo);
+		} catch (NomeEstiloException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
+		return new  ResponseEntity<>(HttpStatus.CREATED);
 	}
 }
