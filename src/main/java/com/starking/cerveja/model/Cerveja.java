@@ -62,6 +62,11 @@ public class Cerveja {
 	@ManyToOne
 	@JoinColumn(name = "id_estilo")
 	private Estilo estilo;
+	
+	@PrePersist @PreUpdate
+	private void prevPersistUpdate() {
+		sku = sku.toUpperCase();
+	}
 
 	public Long getId() {
 		return id;
