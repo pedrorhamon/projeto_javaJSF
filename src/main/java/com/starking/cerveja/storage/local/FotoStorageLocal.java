@@ -2,9 +2,11 @@ package com.starking.cerveja.storage.local;
 
 import static java.nio.file.FileSystems.getDefault;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +47,26 @@ public class FotoStorageLocal implements FotoStorage {
 	}
 
 	@Override
-	public void salvarTemporariamente(MultipartFile[] files) {
-		System.out.println(">>>> salvando a foto temporariamente...");
+	public String salvarTemporariamente(MultipartFile[] files) {
+		String novoNomeNull = null;
+		if(files != null && files.length > 0) {
+			MultipartFile arquivoFiles = files[0];
+			String novoNome = this.renomearArquivo(arquivoFiles.getOriginalFilename());
+			try {				
+				arquivoFiles.transferTo(new File(this.localTemporario.toAbsolutePath().toString() + getDefault().getSeparator() + novoNome));
+			}catch(IOException e) {
+				throw new RuntimeException("Erro salvando a foto na pasta temporária" + e);
+			}
+			return novoNome;
+		}
+		return novoNomeNull;
 	}
 	
-
+	private String renomearArquivo(String nomeOriginal) {
+		String novoNome = UUID.randomUUID().toString() + "_" + nomeOriginal;
+		if(logger.isDebugEnabled()) {
+			logger.debug(String.format("Nome original: %s,  novo nome do arquivo %s", nomeOriginal, novoNome));
+		}
+		return novoNome;
+	}
 }
