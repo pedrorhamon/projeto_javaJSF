@@ -53,6 +53,9 @@
     width: 100%;
     opacity: 0;
     cursor: pointer;
-    
     font-size: 500px;
+}
+
+.bw-required > .control-label:after {
+	content: "*";
 }

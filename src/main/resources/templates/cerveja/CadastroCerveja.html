@@ -16,38 +16,47 @@
 
 	<div class="page-header">
 		<div class="container-fluid">
-			<h1>
-				Cadastro de cerveja
-			</h1>
+			<div class="row">
+				<div class="col-sm-10">
+					<h1>Cadastro de cerveja</h1>
+				</div>
+			
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/cervejas}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisar cervejas</span>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div class="container-fluid">
-
 
 		<form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading">
 			
 			<cerveja:message/>
 	
 			<div class="row">
-				<div class="col-sm-2  form-group" cerveja:classforerror="sku">
+				<div class="col-sm-2  form-group bw-required" cerveja:classforerror="sku">
 					<label for="sku" class="control-label">SKU</label>
 					<input id="sku" type="text" class="form-control" th:field="*{sku}"/>
 				</div>
 				
-				<div class="col-sm-10  form-group" cerveja:classforerror="nome">
+				<div class="col-sm-10  form-group bw-required" cerveja:classforerror="nome">
 					<label for="nome" class="control-label">Nome</label>
 					<input id="nome" type="text" class="form-control" th:field="*{nome}"/>
 				</div>
 			</div>
 
-			<div class="form-group" cerveja:classforerror="descricao">
+			<div class="form-group bw-required" cerveja:classforerror="descricao">
 				<label for="descricao" class="control-label">Descrição</label>
 				<textarea id="descricao" rows="3" class="form-control" th:field="*{descricao}"></textarea>
 			</div>
 
 			<div class="row">
-				<div class="col-sm-3  form-group" cerveja:classforerror="estilo">
+				<div class="col-sm-3  form-group bw-required" cerveja:classforerror="estilo">
 					<label for="estilo" class="control-label">Estilo</label>
 					<div class="bw-field-action">
 						<select id="estilo" class="form-control" th:field="*{estilo}">
@@ -63,7 +72,7 @@
 					</div>
 				</div>
 				
-				<div class="col-sm-3  form-group" cerveja:classforerror="sabor">
+				<div class="col-sm-3  form-group bw-required" cerveja:classforerror="sabor">
 					<label for="sabor" class="control-label">Sabor</label>
 					<select id="sabor" class="form-control" th:field="*{sabor}">
 						<option value="">Selecione o sabor</option>
@@ -71,7 +80,7 @@
 					</select>
 				</div>
 				
-				<div class="col-sm-3  form-group" cerveja:classforerror="teorAlcoolico">
+				<div class="col-sm-3  form-group bw-required" cerveja:classforerror="teorAlcoolico">
 					<label for="teorAlcoolico" class="control-label">Teor alcoólico</label>
 					<div class="input-group">
 						<input id="teorAlcoolico" type="text" class="form-control  js-decimal" th:field="*{teorAlcoolico}"/>
@@ -79,7 +88,7 @@
 					</div>
 				</div>
 				
-				<div class="col-lg-3  col-sm-6  form-group" cerveja:classforerror="origem">
+				<div class="col-lg-3  col-sm-6  form-group bw-required" cerveja:classforerror="origem">
 					<label for="origem" class="control-label">Origem</label>
 					<div>
 						<th:block th:each="origem : ${origens}">
@@ -93,7 +102,7 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-sm-3  form-group" cerveja:classforerror="valor">
+				<div class="col-sm-3  form-group bw-required" cerveja:classforerror="valor">
 					<label for="valor" class="control-label">Valor</label>
 					<div class="input-group">
 						<div class="input-group-addon">R$</div>
@@ -101,7 +110,7 @@
 					</div>
 				</div>
 				
-				<div class="col-sm-3  form-group" cerveja:classforerror="comissao">
+				<div class="col-sm-3  form-group bw-required" cerveja:classforerror="comissao">
 					<label for="comissao" class="control-label">Comissão</label>
 					<div class="input-group">
 						<input id="comissao" type="text" class="form-control  js-decimal" th:field="*{comissao}"/>
@@ -109,7 +118,7 @@
 					</div>
 				</div>
 				
-				<div class="col-sm-3  form-group" cerveja:classforerror="quantidadeEstoque">
+				<div class="col-sm-3  form-group bw-required" cerveja:classforerror="quantidadeEstoque">
 					<label for="estoque" class="control-label">Estoque</label>
 					<input id="estoque" type="text" class="form-control  js-plain" th:field="*{quantidadeEstoque}"/>
 				</div>
