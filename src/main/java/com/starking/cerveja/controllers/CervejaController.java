@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.enums.Origem;
 import com.starking.cerveja.model.enums.Sabor;
+import com.starking.cerveja.repositories.CervejaRepository;
 import com.starking.cerveja.repositories.EstiloRepository;
 import com.starking.cerveja.services.CadastroCervejaService;
 
@@ -27,6 +28,9 @@ public class CervejaController {
 	
 	@Autowired
 	private EstiloRepository estiloRepository;
+	
+	@Autowired
+	private CervejaRepository cervejaRepository;
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cerveja cerveja) {
@@ -54,6 +58,8 @@ public class CervejaController {
 		mv.addObject("estilos", this.estiloRepository.findAll());
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());
+		
+		mv.addObject("cervejas", this.cervejaRepository.findAll());
 		return mv;
 	}
 }
