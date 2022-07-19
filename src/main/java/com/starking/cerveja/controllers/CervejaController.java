@@ -17,6 +17,7 @@ import com.starking.cerveja.model.enums.Origem;
 import com.starking.cerveja.model.enums.Sabor;
 import com.starking.cerveja.repositories.CervejaRepository;
 import com.starking.cerveja.repositories.EstiloRepository;
+import com.starking.cerveja.repositories.filter.CervejaFilter;
 import com.starking.cerveja.services.CadastroCervejaService;
 
 @Controller
@@ -53,13 +54,13 @@ public class CervejaController {
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar() {
+	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult result) {
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCerveja");
 		mv.addObject("estilos", this.estiloRepository.findAll());
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());
 		
-		mv.addObject("cervejas", this.cervejaRepository.findAll());
+		mv.addObject("cervejas", this.cervejaRepository.filtrar(cervejaFilter));
 		return mv;
 	}
 }
