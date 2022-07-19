@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.repositories.CervejaRepository;
-import com.starking.cerveja.services.event.CervejaSalvaEvent;
+import com.starking.cerveja.services.event.cerveja.CervejaSalvaEvent;
 
 @Service
 public class CadastroCervejaService {
@@ -22,6 +22,6 @@ public class CadastroCervejaService {
 	public void salvar(Cerveja cerveja) {
 		this.cervejaRepository.save(cerveja);
 		
-		this.publisher.publishEvent(new CervejaSalvaEvent());
+		this.publisher.publishEvent(new CervejaSalvaEvent(cerveja));
 	}
 }

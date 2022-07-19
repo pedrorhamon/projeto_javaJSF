@@ -85,14 +85,24 @@ public class FotoStorageLocal implements FotoStorage {
 	@Override
 	public void salvar(String foto) {
 		try {
-			Files.move(localTemporario.resolve(foto), this.local.resolve(foto));			
-		}catch(IOException e) {
-			throw new RuntimeException("Erro criando pasta para salvar foto", e);
+			Files.move(this.localTemporario.resolve(foto), this.local.resolve(foto));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro movendo a foto para destino final", e);
 		}
+		
 		try {
-			Thumbnails.of(this.local.resolve(foto).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);			
-		}catch(IOException e) {
-			throw new RuntimeException("Error gerado Thumbnails", e);
+			Thumbnails.of(this.local.resolve(foto).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		} catch (IOException e) {
+			throw new RuntimeException("Erro gerando thumbnail", e);
+		}
+	}
+
+	@Override
+	public byte[] recuperar(String nome) {
+		try {
+			return Files.readAllBytes(this.local.resolve(nome));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro lendo a foto", e);
 		}
 	}
 }

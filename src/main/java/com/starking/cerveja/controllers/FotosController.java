@@ -17,10 +17,10 @@ import com.starking.cerveja.storage.FotoStorageRunnable;
 @RestController
 @RequestMapping("/fotos")
 public class FotosController {
-	
+
 	@Autowired
 	private FotoStorage fotoStorage;
-
+	
 	@PostMapping
 	public DeferredResult<FotoDTO> upload(@RequestParam("files[]") MultipartFile[] files) {
 		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
@@ -32,7 +32,12 @@ public class FotosController {
 	}
 	
 	@GetMapping("/temp/{nome:.*}")
-	public byte[] recuperarFotoTemporaria(@PathVariable("nome") String nome) {
-		return fotoStorage.recuperarFotoTemporaria(nome);
+	public byte[] recuperarFotoTemporaria(@PathVariable String nome) {
+		return this.fotoStorage.recuperarFotoTemporaria(nome);
+	}
+	
+	@GetMapping("/{nome:.*}")
+	public byte[] recuperar(@PathVariable String nome) {
+		return this.fotoStorage.recuperar(nome);
 	}
 }
