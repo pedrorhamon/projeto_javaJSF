@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.starking.cerveja.storage.FotoStorage;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
+
 public class FotoStorageLocal implements FotoStorage {
 
 	private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.class);
@@ -76,6 +79,20 @@ public class FotoStorageLocal implements FotoStorage {
 			return Files.readAllBytes(this.localTemporario.resolve(nome));
 		}catch(IOException e) {
 			throw new RuntimeException("Erro lendo a foto temporária", e);
+		}
+	}
+
+	@Override
+	public void salvar(String foto) {
+		try {
+			Files.move(localTemporario.resolve(foto), this.local.resolve(foto));			
+		}catch(IOException e) {
+			throw new RuntimeException("Erro criando pasta para salvar foto", e);
+		}
+		try {
+			Thumbnails.of(this.local.resolve(foto).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);			
+		}catch(IOException e) {
+			throw new RuntimeException("Error gerado Thumbnails", e);
 		}
 	}
 }

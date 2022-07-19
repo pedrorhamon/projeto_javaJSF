@@ -30,6 +30,8 @@
 		<jackson-core.version>2.7.5</jackson-core.version>
 		
 		<spring-data-jpa.version>1.10.2.RELEASE</spring-data-jpa.version>
+		 
+		 <thumbnailator.version>0.4.8</thumbnailator.version>
 
 	</properties>
 
@@ -159,6 +161,13 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-core.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>${thumbnailator.version}</version>
 			<scope>compile</scope>
 		</dependency>
 
