@@ -132,7 +132,7 @@
 		
 		<div class="col-sm-12  text-center" th:if="${not #lists.isEmpty(pagina.content)}">
 			<nav>
-				<ul class="pagination  pagination-sm" th:with=", paginaAtual=${pagina.number}">
+				<ul class="pagination  pagination-sm" th:with="paginaAtual=${pagina.number}">
 					<li th:class="${pagina.first} ? disabled">
 						<a th:href="|?page=${paginaAtual - 1}|" th:remove="${pagina.first} ? tag"><span>&laquo;</span></a>
 					</li>
