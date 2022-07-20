@@ -28,11 +28,11 @@ public class CervejaRepositoryImpl implements CervejaRepositoryQueries {
 		Criteria criteria = this.manager.unwrap(Session.class).createCriteria(Cerveja.class);
 		
 		int paginaAtual = pageable.getPageNumber();
-		int totalRegistroPorPagina = pageable.getPageSize();
-		int primeiroRegistro = paginaAtual * totalRegistroPorPagina;
+		int totalRegistrosPorPagina = pageable.getPageSize();
+		int primeiroRegistro = paginaAtual * totalRegistrosPorPagina;
 		
 		criteria.setFirstResult(primeiroRegistro);
-		criteria.setMaxResults(totalRegistroPorPagina);
+		criteria.setMaxResults(totalRegistrosPorPagina);
 
 		if (filtro != null) {
 			if (!StringUtils.isEmpty(filtro.getSku())) {
