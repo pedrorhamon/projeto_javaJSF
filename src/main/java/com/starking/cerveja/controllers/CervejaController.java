@@ -3,6 +3,8 @@ package com.starking.cerveja.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,12 +56,14 @@ public class CervejaController {
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult result) {
+	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult result, @PageableDefault(size =2) Pageable pageable) {
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCerveja");
 		mv.addObject("estilos", this.estiloRepository.findAll());
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());
-		mv.addObject("cervejas", this.cervejaRepository.filtrar(cervejaFilter));
+		
+		
+		mv.addObject("cervejas", this.cervejaRepository.filtrar(cervejaFilter, pageable));
 		return mv;
 	}
 }
