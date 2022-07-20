@@ -48,7 +48,7 @@ public class CervejaController {
 			return novo(cerveja);
 		}
 		
-		cervejaService.salvar(cerveja);
+		this.cervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
 		return new ModelAndView("redirect:/cervejas/novo");
 	}
