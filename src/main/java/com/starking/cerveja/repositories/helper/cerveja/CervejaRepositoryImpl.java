@@ -6,23 +6,26 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.repositories.filter.CervejaFilter;
+import com.starking.cerveja.repositories.paginacao.PaginacaoUtil;
 
 public class CervejaRepositoryImpl implements CervejaRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Autowired
+	private PaginacaoUtil paginacaoUtil;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -30,21 +33,8 @@ public class CervejaRepositoryImpl implements CervejaRepositoryQueries {
 	public Page<Cerveja> filtrar(CervejaFilter filtro, Pageable pageable) {
 		Criteria criteria = this.manager.unwrap(Session.class).createCriteria(Cerveja.class);
 		
-		int paginaAtual = pageable.getPageNumber();
-		int totalRegistrosPorPagina = pageable.getPageSize();
-		int primeiroRegistro = paginaAtual * totalRegistrosPorPagina;
-		
-		criteria.setFirstResult(primeiroRegistro);
-		criteria.setMaxResults(totalRegistrosPorPagina);
-		
-		Sort sort = pageable.getSort();
-		if(sort != null) {
-			Sort.Order order = sort.iterator().next();
-			String property = order.getProperty();
-			criteria.addOrder(order.isAscending() ? Order.asc(property) : Order.desc(property));
-		}
-
-		adicionarFiltro(filtro, criteria);
+		this.paginacaoUtil.preparar(criteria, pageable);
+		this.adicionarFiltro(filtro, criteria);
 
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
