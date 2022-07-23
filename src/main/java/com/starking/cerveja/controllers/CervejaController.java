@@ -66,8 +66,7 @@ public class CervejaController {
 		mv.addObject("origens", Origem.values());
 		
 		
-		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(this.cervejaRepository.filtrar(cervejaFilter, pageable)
-				,httpServletRequest);
+		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(this.cervejaRepository.filtrar(cervejaFilter, pageable), httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
