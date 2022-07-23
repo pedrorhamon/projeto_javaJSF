@@ -1,13 +1,17 @@
 package com.starking.cerveja.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.exception.NomeEstiloException;
 import com.starking.cerveja.model.Estilo;
+import com.starking.cerveja.repositories.EstiloRepository;
+import com.starking.cerveja.repositories.filter.EstiloFilter;
 import com.starking.cerveja.services.CadastroEstiloService;
 
 @Controller
@@ -25,6 +32,9 @@ public class EstiloController {
 	
 	@Autowired
 	private CadastroEstiloService estiloService;
+	
+	@Autowired
+	private EstiloRepository estiloRepository;
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo(Estilo estilo) {
@@ -55,5 +65,15 @@ public class EstiloController {
 		}
 		estilo = this.estiloService.salvar(estilo);		
 		return new  ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(EstiloFilter estiloFilter, BindingResult result, @PageableDefault(size =2) Pageable pageable,
+			HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("estilo/PesquisaEstilo");
+		
+		PageWrapper<Estilo> paginaWrapper = new PageWrapper<>(this.estiloRepository.filtrar(estiloFilter, pageable), httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+		return mv;
 	}
 }
