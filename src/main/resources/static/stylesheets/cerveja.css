@@ -99,5 +99,9 @@
 /* afafadafd */
 
 .table-estilos-col-codigo {
-	width: 100px;
+	width: 80px;
+}
+
+.bw-tabela-simples-estilo {
+	margin-top: 15px;
 }
