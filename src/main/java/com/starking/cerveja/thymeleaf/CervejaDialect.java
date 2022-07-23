@@ -10,6 +10,7 @@ import org.thymeleaf.standard.StandardDialect;
 import com.starking.cerveja.thymeleaf.processor.ClassForErrorAttributeTagProcessor;
 import com.starking.cerveja.thymeleaf.processor.MessageElementTagProcessor;
 import com.starking.cerveja.thymeleaf.processor.OrderElementTagProcessor;
+import com.starking.cerveja.thymeleaf.processor.PaginationElementTagProcessor;
 
 public class CervejaDialect extends AbstractProcessorDialect {
 
@@ -23,6 +24,7 @@ public class CervejaDialect extends AbstractProcessorDialect {
 		processadores.add(new ClassForErrorAttributeTagProcessor(dialectPrefix));
 		processadores.add(new MessageElementTagProcessor(dialectPrefix));
 		processadores.add(new OrderElementTagProcessor(dialectPrefix));
+		processadores.add(new PaginationElementTagProcessor(dialectPrefix));
 		return processadores;
 	}
 
