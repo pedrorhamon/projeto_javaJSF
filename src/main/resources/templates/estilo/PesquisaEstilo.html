@@ -2,7 +2,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorator="'layout/LayoutPadrao'"
+	  layout:decorate="layout/LayoutPadrao"
 	  xmlns:cerveja="http://cerveja.starking.com">
 <head>
 	<title>Pesquisa de cervejas</title>
@@ -33,7 +33,7 @@
 		<form method="GET" th:object="${estiloFilter}">
 			<div class="row">
 				
-				<div class="form-group  col-sm-10" >
+				<div class="form-group  col-sm-12" >
 					<label class="control-label" for="nome">Nome</label>
 					<input type="text" class="form-control" id="nome" th:field="*{nome}"/>
 				</div>
