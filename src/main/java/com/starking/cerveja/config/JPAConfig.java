@@ -21,7 +21,7 @@ import com.starking.cerveja.repositories.CervejaRepository;
 
 @Configuration
 @ComponentScan(basePackageClasses = CervejaRepository.class)
-@EnableJpaRepositories(basePackages = "com.starking.cerveja.repositories", enableDefaultTransactions = false)
+@EnableJpaRepositories(basePackageClasses = CervejaRepository.class, enableDefaultTransactions = false)
 @EnableTransactionManagement
 public class JPAConfig {
 

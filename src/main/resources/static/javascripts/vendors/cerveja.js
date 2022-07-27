@@ -39,10 +39,27 @@ Cerveja.MaskPhoneNumber = (function(){
 	
 }());
 
+Cerveja.MaskCep = (function() {
+	
+	function MaskCep() {
+		this.inputCep = $('.js-cep');
+	}
+	
+	MaskCep.prototype.enable = function() {
+		this.inputCep.mask('00.000-000');
+	}
+	
+	return MaskCep;
+	
+}());
+
 $(function() {
 	var maskNumber = new Cerveja.MaskMoney();
 	maskNumber.enable();
 	
 	var maskPhoneNumber = new Cerveja.MaskPhoneNumber();
 	maskPhoneNumber.enable();
+	
+	var maskCep = new Cerveja.MaskCep();
+	maskCep.enable();
 });
