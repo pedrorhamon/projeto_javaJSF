@@ -29,11 +29,5 @@ public class CidadeController {
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(@RequestParam(name ="estado", defaultValue = "-1" ) Long estadoId) {
 		return this.cidadeRepository.findByEstadoCodigo(estadoId);
-	}
-	
-	@RequestMapping
-	public String pesquisar() {
-		return "cidade/CadastroCidade";
-	}
-	
+	}	
 }
