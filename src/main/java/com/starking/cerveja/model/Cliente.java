@@ -1,34 +1,42 @@
 package com.starking.cerveja.model;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
+import java.io.Serializable;
 
-public class Cliente {
-	
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.starking.cerveja.model.enums.TipoPessoa;
+
+public class Cliente implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	
-	@NotBlank(message = "Nome é obrigatório")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
+
 	private String nome;
-	
-	@CNPJ(message = "Cnpj incorreto")
-	@CPF(message = "CPF incorreto")
-	@NotBlank(message = "CPF/Cnpj é obrigatório")
-	private String cpfecnpj;
-	
-	@NotBlank(message = "Telefone é obrigatório")
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_pessoa")
+	private TipoPessoa tipoPessoa;
+
+	@Column(name = "cpf_cnpj")
+	private String cpfOuCnpj;
+
 	private String telefone;
-	
-	@NotBlank(message = "logradouro é obrigatório")
-	private String logradouro;
-	
-	@NotBlank(message = "Número é obrigatório")
-	private String numero;
-	
-	@NotBlank(message = "Complemento é obrigatório")
-	private String complemento;
-	
-	private Cerveja cerveja;
+
+	private String email;
+
+	@Embedded
+	private Endereco endereco;
 
 	public Long getId() {
 		return id;
@@ -36,6 +44,14 @@ public class Cliente {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -46,12 +62,20 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getCpfecnpj() {
-		return cpfecnpj;
+	public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
 	}
 
-	public void setCpfecnpj(String cpfecnpj) {
-		this.cpfecnpj = cpfecnpj;
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
+	}
+
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public String getTelefone() {
@@ -62,35 +86,44 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public String getLogradouro() {
-		return logradouro;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getNumero() {
-		return numero;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
-	public String getComplemento() {
-		return complemento;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
 	}
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public Cerveja getCerveja() {
-		return cerveja;
-	}
-
-	public void setCerveja(Cerveja cerveja) {
-		this.cerveja = cerveja;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
 	}
 }
