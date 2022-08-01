@@ -43,6 +43,7 @@ public class Cliente implements Serializable{
 	@Column(name = "tipo_pessoa")
 	private TipoPessoa tipoPessoa;
 
+	@NotBlank(message = "CPF/CNPJ é obrigatório")
 	@CPF(groups = CpfGroup.class)
 	@CNPJ(groups = CnpjGroup.class)
 	@Column(name = "cpf_cnpj")

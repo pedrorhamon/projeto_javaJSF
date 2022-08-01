@@ -3,8 +3,8 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:data="http://www.thymeleaf.org/extras/data"
-	layout:decorate="~{layout/LayoutPadrao}"
-	xmlns:cerveja="http://cerveja.starking.com">
+	xmlns:cerveja="http://cerveja.starking.com"
+	layout:decorate="~{layout/LayoutPadrao}">
 
 <head>
 	<title>Cadastro de cliente</title>
@@ -49,7 +49,7 @@
 				
 				<div class="form-group  col-sm-8" >
 					<label for="cpfOuCnpj">CPF/CNPJ</label>
-					<input type="text" class="form-control" id="cpfOuCnpj" th:field="cpfOuCnpj" disabled/>
+					<input type="text" class="form-control" id="cpfOuCnpj" th:field="*{cpfOuCnpj}" disabled/>
 				</div>
 			</div>
 			
@@ -90,7 +90,7 @@
 				
 				<div class="form-group  col-sm-4">
 					<label for="estado">Estado</label>
-					<select id="estado" class="form-control">
+					<select id="estado" class="form-control" th:field="*{endereco.estado}">
 	                    <option value="">Selecione o estado</option>
 	                    <option th:each="estado : ${estados}" th:value="${estado.codigo}" th:text="${estado.nome}">São Paulo</option>
 	                </select>

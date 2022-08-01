@@ -11,7 +11,7 @@ Cerveja.MascaraCpfCnpj = (function() {
 	MascaraCpfCnpj.prototype.iniciar = function() {
 		this.radioTipoPessoa.on('change', onTipoPessoaAlterado.bind(this));
 		var tipoPessoaSelecionada = this.radioTipoPessoa.filter(':checked')[0];
-		if(tipoPessoaSelecionada) {
+		if (tipoPessoaSelecionada) {
 			aplicarMascara.call(this, $(tipoPessoaSelecionada));
 		}
 	}
