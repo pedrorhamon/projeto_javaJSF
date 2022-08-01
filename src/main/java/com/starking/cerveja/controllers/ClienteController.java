@@ -19,7 +19,7 @@ public class ClienteController {
 	public ModelAndView novo() {
 		ModelAndView mv = new ModelAndView("cliente/CadastroCliente");
 		mv.addObject("tiposPessoa", TipoPessoa.values());
-		mv.addObject("estados", estadoRepository.findAll());
+		mv.addObject("estados", this.estadoRepository.findAll());
 		return mv;
 	}
 }
