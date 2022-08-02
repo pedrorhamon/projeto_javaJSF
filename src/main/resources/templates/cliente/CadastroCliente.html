@@ -99,6 +99,7 @@
 				<div class="form-group  col-sm-4">
 					<label  for="cidade">Cidade</label>
 					<div class="bw-field-action">
+					<input type="hidden" id="inputHiddenCidadeSelecionada" th:value="*{endereco.cidade} != null ? *{endereco.cidade.codigo}"/>
 						<select id="cidade" class="form-control" data:url="@{/cidades}" th:field="*{endereco.cidade}">
 						</select>
 						
