@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.starking.cerveja.model.Cliente;
 import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.EstadoRepository;
+import com.starking.cerveja.services.CadastroClienteService;
 
 @Controller
 @RequestMapping("/clientes")
@@ -20,6 +21,9 @@ public class ClienteController {
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private CadastroClienteService clienteService;
 
 	@RequestMapping("novo")
 	public ModelAndView novo(Cliente cliente) {
@@ -35,6 +39,7 @@ public class ClienteController {
 			return novo(cliente);
 		}
 
+		this.clienteService.salvar(cliente);
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes/novo");
 	}
