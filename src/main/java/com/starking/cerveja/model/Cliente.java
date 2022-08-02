@@ -31,8 +31,6 @@ public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
@@ -61,15 +59,11 @@ public class Cliente implements Serializable{
 
 	@PrePersist @PreUpdate
 	private void preInsertPreUpdate() {
-		this.cpfOuCnpj = this.cpfOuCnpj.replaceAll("\\.|-|/","");
+		this.cpfOuCnpj = TipoPessoa.removerFormatacao(cpfOuCnpj);
 	}
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public String getCpfOuCnpjSemFormatacao() {
+		return TipoPessoa.removerFormatacao(this.cpfOuCnpj);
 	}
 
 	public Long getCodigo() {

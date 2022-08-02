@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.cerveja.exception.CpfClienteJaCadastradoException;
 import com.starking.cerveja.model.Cliente;
 import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.EstadoRepository;
@@ -38,8 +39,13 @@ public class ClienteController {
 		if (result.hasErrors()) {
 			return novo(cliente);
 		}
-
-		this.clienteService.salvar(cliente);
+		
+		try {
+			this.clienteService.salvar(cliente);			
+		}catch(CpfClienteJaCadastradoException e) {
+			result.rejectValue("cpfOuCnpj", e.getMessage(), e.getMessage());
+			return this.novo(cliente);
+		}
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes/novo");
 	}
