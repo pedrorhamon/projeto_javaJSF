@@ -2,6 +2,7 @@ package com.starking.cerveja.repositories.helper.cliente;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.hibernate.sql.JoinType;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -35,6 +36,8 @@ public class ClienteRepositoryImpl implements ClienteRepositoryQueries {
 		
 		paginacaoUtil.preparar(criteria, pageable);
 		adicionarFiltro(filtro, criteria);
+		criteria.createAlias("endereco.cidade", "c", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("c.estado", "e", JoinType.LEFT_OUTER_JOIN);
 				
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
