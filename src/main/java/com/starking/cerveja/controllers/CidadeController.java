@@ -2,16 +2,29 @@ package com.starking.cerveja.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.cerveja.exception.EstadoCidadeJaCadastradoException;
 import com.starking.cerveja.model.Cidade;
 import com.starking.cerveja.repositories.CidadeRepository;
-
+import com.starking.cerveja.repositories.EstadoRepository;
+import com.starking.cerveja.repositories.filter.ClienteFilter;
+import com.starking.cerveja.services.CadastrarCidadeService;
 
 
 @Controller
@@ -21,9 +34,33 @@ public class CidadeController {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	@RequestMapping("/novo")
-	public String novo() {
-		return "cidade/CadastroCidade";
+	@Autowired
+	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private CadastrarCidadeService cidadeService;
+	
+	@RequestMapping("novo")
+	public ModelAndView novo(Cidade cidade) {
+		ModelAndView mv = new ModelAndView("cidade/CadastroCidade");
+		mv.addObject("estados", this.estadoRepository.findAll());
+		return mv;
+	}
+	
+	@PostMapping("/novo")
+	public ModelAndView salvar(@Valid Cidade cidade, BindingResult result, RedirectAttributes attributes) {
+		if (result.hasErrors()) {
+			return novo(cidade);
+		}
+
+		try {
+			this.cidadeService.salvar(cidade);
+		} catch (EstadoCidadeJaCadastradoException e) {
+			result.rejectValue("nome", e.getMessage(), e.getMessage());
+			return this.novo(cidade);
+		}
+		attributes.addFlashAttribute("mensagem", "Cidade salva com sucesso!");
+		return new ModelAndView("redirect:/cidades/novo");
 	}
 	
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -33,4 +70,12 @@ public class CidadeController {
 		} catch(InterruptedException e) {	}		
 			return this.cidadeRepository.findByEstadoCodigo(codigoEstado);
 	}	
+	
+	@GetMapping
+	public ModelAndView pesquisar(ClienteFilter clienteFilter, BindingResult result,
+			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("cidade/PesquisaCidade");
+		
+		return mv;
+	}
 }
