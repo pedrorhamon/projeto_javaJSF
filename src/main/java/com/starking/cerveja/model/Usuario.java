@@ -2,12 +2,16 @@ package com.starking.cerveja.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -37,6 +41,13 @@ public class Usuario  implements Serializable{
 	private String senha;
 	
 	private Boolean ativo;
+	
+	@NotNull(message = "Selecione pelo menos um grupo")
+	@ManyToMany
+	@JoinTable(name = "usuario_grupo", 
+	joinColumns = @JoinColumn(name = "codigo_usuario"), 
+	inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))
+	private List<Grupo> grupos;
 	
 	@NotNull(message = "Data de nascimento é obrigatório")
 	@Column(name = "data_nascimento")
@@ -89,7 +100,15 @@ public class Usuario  implements Serializable{
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+	
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
 
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
