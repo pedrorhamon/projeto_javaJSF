@@ -13,13 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.starking.cerveja.validation.AtributoConfirmacao;
 
+@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha", message = "Confirmação da senha não confere")
 @Entity
 @Table(name = "usuario")
 public class Usuario  implements Serializable{
@@ -39,6 +42,9 @@ public class Usuario  implements Serializable{
 	
 	@JsonIgnore
 	private String senha;
+	
+	@Transient
+	private String confirmaSenha;
 	
 	private Boolean ativo;
 	
@@ -82,6 +88,14 @@ public class Usuario  implements Serializable{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+	
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
 	}
 
 	public Boolean getAtivo() {
