@@ -3,8 +3,8 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:data="http://www.thymeleaf.org/extras/data"
-	xmlns:cerveja="http://cerveja.starking.com"
-	layout:decorate="~{layout/LayoutPadrao}">
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:cerveja="http://cerveja.algaworks.com">
 <head>
 	<title>Cadastro de Usuário</title>
 	
@@ -33,6 +33,9 @@
 
 	<div class="container-fluid">
 		<form method="POST" th:object="${usuario}">
+		
+		<cerveja:message/>
+		
 			<div class="row">
 				<div class="form-group  col-sm-12 bw-required" cerveja:classforerror="nome">
 					<label for="nome" class="control-label">Nome</label>

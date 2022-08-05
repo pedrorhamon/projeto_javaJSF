@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.starking.cerveja.validation.AtributoConfirmacao;
 
-@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha", message = "Confirmação da senha não confere")
+@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmaSenha", message = "Confirmação da senha não confere")
 @Entity
 @Table(name = "usuario")
 public class Usuario  implements Serializable{
