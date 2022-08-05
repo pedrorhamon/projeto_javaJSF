@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.exception.EstadoCidadeJaCadastradoException;
 import com.starking.cerveja.model.Cidade;
 import com.starking.cerveja.repositories.CidadeRepository;
 import com.starking.cerveja.repositories.EstadoRepository;
-import com.starking.cerveja.repositories.filter.ClienteFilter;
+import com.starking.cerveja.repositories.filter.CidadeFilter;
 import com.starking.cerveja.services.CadastrarCidadeService;
 
 
@@ -72,10 +73,13 @@ public class CidadeController {
 	}	
 	
 	@GetMapping
-	public ModelAndView pesquisar(ClienteFilter clienteFilter, BindingResult result,
-			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result,
+			@PageableDefault(size = 10) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("cidade/PesquisaCidade");
 		
+		PageWrapper<Cidade> paginaWrapper = new PageWrapper<>(this.cidadeRepository.filtrar(cidadeFilter, pageable)
+				, httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
 }

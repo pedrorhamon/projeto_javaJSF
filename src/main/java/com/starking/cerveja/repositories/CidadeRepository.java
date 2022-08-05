@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.starking.cerveja.model.Cidade;
 import com.starking.cerveja.model.Estado;
+import com.starking.cerveja.repositories.helper.cidade.CidadeRepositoryQueries;
 
 @Repository
-public interface CidadeRepository extends JpaRepository<Cidade, Long>{
+public interface CidadeRepository extends JpaRepository<Cidade, Long>, CidadeRepositoryQueries{
 	
 	List<Cidade> findByEstadoCodigo(Long codigoEstado);
 	
