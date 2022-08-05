@@ -23,6 +23,8 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.hibernate.validator.group.GroupSequenceProvider;
 
 import com.starking.cerveja.model.enums.TipoPessoa;
+import com.starking.cerveja.model.interfaces.CnpjGroup;
+import com.starking.cerveja.model.interfaces.CpfGroup;
 import com.starking.cerveja.validation.ClienteGroupSequenceProvider;
 
 @Entity

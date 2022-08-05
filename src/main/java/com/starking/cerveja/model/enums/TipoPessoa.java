@@ -1,7 +1,7 @@
 package com.starking.cerveja.model.enums;
 
-import com.starking.cerveja.model.CnpjGroup;
-import com.starking.cerveja.model.CpfGroup;
+import com.starking.cerveja.model.interfaces.CnpjGroup;
+import com.starking.cerveja.model.interfaces.CpfGroup;
 
 public enum TipoPessoa {
 	
