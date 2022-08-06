@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.exception.EmailJaCadastradoException;
+import com.starking.cerveja.exception.SenhaObrigatoriaException;
 import com.starking.cerveja.model.Usuario;
 import com.starking.cerveja.repositories.GrupoRepository;
 import com.starking.cerveja.services.CadastrarUsuarioService;
@@ -42,6 +43,9 @@ public class UsuarioController {
 			this.usuarioService.salvar(usuario);
 		}catch(EmailJaCadastradoException e) {
 			result.rejectValue("email", e.getMessage(), e.getMessage());
+			return this.novo(usuario);
+		}catch(SenhaObrigatoriaException e) {
+			result.rejectValue("senha", e.getMessage(), e.getMessage());
 			return this.novo(usuario);
 		}
 		

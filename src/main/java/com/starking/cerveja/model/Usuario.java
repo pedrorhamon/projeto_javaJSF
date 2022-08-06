@@ -14,7 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -59,6 +58,10 @@ public class Usuario  implements Serializable{
 	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
 
+	public boolean isNovo() {
+		return codigo == null;
+	}
+	
 	public Long getCodigo() {
 		return codigo;
 	}
