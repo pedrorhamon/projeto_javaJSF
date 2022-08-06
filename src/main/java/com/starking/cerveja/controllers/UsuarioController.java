@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.exception.EmailJaCadastradoException;
 import com.starking.cerveja.model.Usuario;
+import com.starking.cerveja.repositories.GrupoRepository;
 import com.starking.cerveja.services.CadastrarUsuarioService;
 
 @Controller
@@ -21,9 +22,13 @@ public class UsuarioController {
 	@Autowired
 	private CadastrarUsuarioService usuarioService;
 	
+	@Autowired
+	private GrupoRepository grupoRepository;
+	
 	@RequestMapping("novo")
 	public ModelAndView novo(Usuario usuario) {
 		ModelAndView mv = new ModelAndView("usuario/CadastroUsuario");
+		mv.addObject("grupos", this.grupoRepository.findAll());
 		return mv;
 	}
 	

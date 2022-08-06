@@ -40,6 +40,7 @@ import com.starking.cerveja.controllers.CervejaController;
 import com.starking.cerveja.controllers.converters.CidadeConverter;
 import com.starking.cerveja.controllers.converters.EstadoConverter;
 import com.starking.cerveja.controllers.converters.EstiloConverter;
+import com.starking.cerveja.controllers.converters.GrupoConverter;
 import com.starking.cerveja.thymeleaf.CervejaDialect;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
@@ -98,6 +99,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		cs.addConverter(new EstiloConverter());	
 		cs.addConverter(new CidadeConverter());
 		cs.addConverter(new EstadoConverter());
+		cs.addConverter(new GrupoConverter());
 		
 		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
 		cs.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
