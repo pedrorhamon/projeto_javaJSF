@@ -53,6 +53,25 @@ Cerveja.MaskCep = (function() {
 	
 }());
 
+Cerveja.MaskDate = (function() {
+	
+	function MaskDate() {
+		this.inputDate = $('.js-date');
+	}
+	
+	MaskDate.prototype.enable = function() {
+		this.inputDate.mask('00/00/0000');
+		this.inputDate.datepicker({
+			orientation: 'bottom',
+			language: 'pt-BR',
+			autoclose: true
+		});
+	}
+	
+	return MaskDate;
+	
+}());
+
 $(function() {
 	var maskNumber = new Cerveja.MaskMoney();
 	maskNumber.enable();
@@ -62,4 +81,7 @@ $(function() {
 	
 	var maskCep = new Cerveja.MaskCep();
 	maskCep.enable();
+	
+	var maskDate = new Cerveja.MaskDate();
+	maskDate.enable();
 });
