@@ -1,9 +1,13 @@
 package com.starking.cerveja.config.security;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +29,15 @@ public class AppUserDetailsService implements UserDetailsService{
 		
 		Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorretos"));
 		
-		return new User(usuario.getEmail(), usuario.getSenha(), new HashSet<>());
+		return new User(usuario.getEmail(), usuario.getSenha(), getPermissao(usuario));
+	}
+
+	private Collection<? extends GrantedAuthority> getPermissao(Usuario usuario) {
+		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+		
+//		List<String> permissoes = this.usuarioRepository.permissoes(usuario);
+		this.usuarioRepository.permissoes(usuario).forEach(p -> authorities.add(new SimpleGrantedAuthority(p.toUpperCase())));
+		return authorities;
 	}
 
 }
