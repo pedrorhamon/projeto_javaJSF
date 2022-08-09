@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.starking.cerveja.model.Usuario;
+import com.starking.cerveja.repositories.helper.usuario.UsuarioRepositoryQueries;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>, UsuarioRepositoryQueries{
 	
 	Optional<Usuario> findByEmail(String email);
 
