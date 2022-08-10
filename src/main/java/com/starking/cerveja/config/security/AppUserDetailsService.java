@@ -18,7 +18,7 @@ import com.starking.cerveja.model.Usuario;
 import com.starking.cerveja.repositories.UsuarioRepository;
 
 @Service
-public class AppUserDetailsService implements UserDetailsService{
+public class AppUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -39,5 +39,4 @@ public class AppUserDetailsService implements UserDetailsService{
 		this.usuarioRepository.permissoes(usuario).forEach(p -> authorities.add(new SimpleGrantedAuthority(p.toUpperCase())));
 		return authorities;
 	}
-
 }
