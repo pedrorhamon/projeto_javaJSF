@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.Estilo;
 import com.starking.cerveja.repositories.filter.EstiloFilter;
 import com.starking.cerveja.repositories.paginacao.PaginacaoUtil;
@@ -49,7 +48,7 @@ public class EstiloRepositoryImpl implements EstiloRepositoryQueries {
 	}
 	
 	private Long total(EstiloFilter filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cerveja.class);
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Estilo.class);
 		criteria.setProjection(Projections.rowCount());
 		this.adicionarFiltro(filtro, criteria);
 		return (Long)criteria.uniqueResult();
