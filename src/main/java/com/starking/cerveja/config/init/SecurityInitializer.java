@@ -10,6 +10,8 @@ public class SecurityInitializer extends AbstractSecurityWebApplicationInitializ
 	
 	@Override
 	protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
+		servletContext.getSessionCookieConfig().setMaxAge(20);
+		
 		FilterRegistration chFilterRegistrationFilter = servletContext.addFilter("encodingFilter", new CharacterEncodingFilter());
 		chFilterRegistrationFilter.setInitParameter("encoding", "UTF-8");
 		chFilterRegistrationFilter.setInitParameter("forceEncoding", "true");
