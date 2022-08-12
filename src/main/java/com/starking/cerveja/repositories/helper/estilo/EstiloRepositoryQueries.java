@@ -9,5 +9,4 @@ import com.starking.cerveja.repositories.filter.EstiloFilter;
 public interface EstiloRepositoryQueries {
 	
 	Page<Estilo> filtrar(EstiloFilter filtro, Pageable pageable);	
-
 }
