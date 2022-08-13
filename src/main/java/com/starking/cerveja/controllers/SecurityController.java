@@ -26,4 +26,9 @@ public class SecurityController {
 	public String paginaNaoEncontrada() {
 		return "404";
 	}
+	
+	@GetMapping("/500")
+	public String errorDoServidor() {
+		return "500";
+	}
 }
