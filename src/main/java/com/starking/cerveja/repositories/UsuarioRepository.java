@@ -15,5 +15,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>, Usuario
 	Optional<Usuario> findByEmail(String email);
 	
 	List<Usuario> findByCodigoIn(Long[] codigos);
-
 }

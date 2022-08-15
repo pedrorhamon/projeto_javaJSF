@@ -1,8 +1,11 @@
 package com.starking.cerveja.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.exception.EmailJaCadastradoException;
 import com.starking.cerveja.exception.SenhaObrigatoriaException;
 import com.starking.cerveja.model.Usuario;
@@ -65,10 +69,13 @@ public class UsuarioController {
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar(UsuarioFilter usuarioFilter) {
+	public ModelAndView pesquisar(UsuarioFilter usuarioFilter, @PageableDefault(size =3) Pageable pageable,
+			HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("usuario/PesquisaUsuario");
-		mv.addObject("usuarios", this.usuarioRepository.filtrar(usuarioFilter));
 		mv.addObject("grupos", this.grupoRepository.findAll());
+		PageWrapper<Usuario> paginaWrapper = new PageWrapper<>(this.usuarioRepository.filtrar(usuarioFilter, pageable)
+				, httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
 	
