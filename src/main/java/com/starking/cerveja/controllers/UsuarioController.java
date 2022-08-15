@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,8 @@ import com.starking.cerveja.exception.EmailJaCadastradoException;
 import com.starking.cerveja.exception.SenhaObrigatoriaException;
 import com.starking.cerveja.model.Usuario;
 import com.starking.cerveja.repositories.GrupoRepository;
+import com.starking.cerveja.repositories.UsuarioRepository;
+import com.starking.cerveja.repositories.filter.UsuarioFilter;
 import com.starking.cerveja.services.CadastrarUsuarioService;
 
 @Controller
@@ -25,6 +28,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private GrupoRepository grupoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@RequestMapping("novo")
 	public ModelAndView novo(Usuario usuario) {
@@ -51,5 +57,13 @@ public class UsuarioController {
 		
 		attributes.addFlashAttribute("mensagem", "Usuário salvo com sucesso");
 		return new ModelAndView("redirect:/usuarios/novo");
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(UsuarioFilter usuarioFilter) {
+		ModelAndView mv = new ModelAndView("usuario/PesquisaUsuario");
+		mv.addObject("usuarios", this.usuarioRepository.findAll());
+		mv.addObject("grupos", this.grupoRepository.findAll());
+		return mv;
 	}
 }

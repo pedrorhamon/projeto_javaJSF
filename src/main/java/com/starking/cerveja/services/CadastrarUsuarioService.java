@@ -39,5 +39,4 @@ public class CadastrarUsuarioService {
 		}
 		this.usuarioRepository.save(usuario);
 	}
-
 }
