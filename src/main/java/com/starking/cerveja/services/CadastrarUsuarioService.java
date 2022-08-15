@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import com.starking.cerveja.exception.EmailJaCadastradoException;
 import com.starking.cerveja.exception.SenhaObrigatoriaException;
 import com.starking.cerveja.model.Usuario;
+import com.starking.cerveja.model.enums.StatusUsuario;
 import com.starking.cerveja.repositories.UsuarioRepository;
 
 @Service
@@ -38,5 +39,10 @@ public class CadastrarUsuarioService {
 			usuario.setConfirmaSenha(usuario.getSenha());
 		}
 		this.usuarioRepository.save(usuario);
+	}
+
+	@Transactional
+	public void alterarStatus(Long[] codigos, StatusUsuario status) {
+		status.executar(codigos, usuarioRepository);
 	}
 }

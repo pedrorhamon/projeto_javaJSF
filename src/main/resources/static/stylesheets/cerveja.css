@@ -131,3 +131,7 @@
 	font-family: 'FontAwesome';
 	content: "\f00c";
 }
+
+.table-usuarios-col-status {
+	width: 30px;
+}
