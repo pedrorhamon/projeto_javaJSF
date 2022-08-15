@@ -1,5 +1,7 @@
 package com.starking.cerveja.repositories.helper.cerveja;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.starking.cerveja.model.Cerveja;
+import com.starking.cerveja.model.dto.CervejaDTO;
 import com.starking.cerveja.repositories.filter.CervejaFilter;
 import com.starking.cerveja.repositories.paginacao.PaginacaoUtil;
 
@@ -79,5 +82,15 @@ public class CervejaRepositoryImpl implements CervejaRepositoryQueries {
 
 	private boolean isEstiloPresente(CervejaFilter filtro) {
 		return filtro.getEstilo() != null && filtro.getEstilo().getId() != null;
+	}
+
+	@Override
+	public List<CervejaDTO> porSkuOuNome(String skuOuNome) {
+		String jpql = "select new com.starking.cerveja.model.dto.CervejaDTO(id, sku, nome, origem, valor, foto) "
+				+ "from Cerveja where lower(sku) like lower(:skuOuNome) or lower(nome) like lower(:skuOuNome)";
+		List<CervejaDTO> cervejasFiltradas = manager.createQuery(jpql, CervejaDTO.class)
+					.setParameter("skuOuNome", skuOuNome + "%")
+					.getResultList();
+		return cervejasFiltradas;
 	}
 }

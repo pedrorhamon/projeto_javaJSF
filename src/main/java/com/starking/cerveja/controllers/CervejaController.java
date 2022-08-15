@@ -1,5 +1,7 @@
 package com.starking.cerveja.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -12,11 +14,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.model.Cerveja;
+import com.starking.cerveja.model.dto.CervejaDTO;
 import com.starking.cerveja.model.enums.Origem;
 import com.starking.cerveja.model.enums.Sabor;
 import com.starking.cerveja.repositories.CervejaRepository;
@@ -69,5 +73,10 @@ public class CervejaController {
 		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(this.cervejaRepository.filtrar(cervejaFilter, pageable), httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 		return mv;
+	}
+	
+	@GetMapping("/filtro")
+	public @ResponseBody List<CervejaDTO> pesquisar(String skuOuNome) {
+		return this.cervejaRepository.porSkuOuNome(skuOuNome);
 	}
 }
