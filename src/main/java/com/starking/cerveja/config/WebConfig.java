@@ -43,11 +43,12 @@ import com.starking.cerveja.controllers.converters.EstadoConverter;
 import com.starking.cerveja.controllers.converters.EstiloConverter;
 import com.starking.cerveja.controllers.converters.GrupoConverter;
 import com.starking.cerveja.thymeleaf.CervejaDialect;
+import com.starking.cerveja.venda.TabelaItensVenda;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
-@ComponentScan(basePackageClasses = {CervejaController.class})
+@ComponentScan(basePackageClasses = {CervejaController.class, TabelaItensVenda.class})
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableCaching
