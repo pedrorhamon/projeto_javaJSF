@@ -23,14 +23,14 @@ public class VendaController {
 	
 	@GetMapping("/nova")
 	public String nova() {
-		return "venda/CadastroVenda";
+		return "vendas/CadastroVenda";
 	}
 	
 	@PostMapping("/item")
-	public ModelAndView adicionarItem(Long id) {
-		Cerveja cerveja = cervejaRepository.findOne(id);
+	public ModelAndView adicionarItem(Long codigoCerveja) {
+		Cerveja cerveja = this.cervejaRepository.findOne(codigoCerveja);
 		tabelaItensVenda.adicionarItem(cerveja, 1);
-		ModelAndView mv = new ModelAndView("venda/TabelaItensVenda");
+		ModelAndView mv = new ModelAndView("vendas/TabelaItensVenda");
 		mv.addObject("itens", tabelaItensVenda.getItens());
 		return mv;
 	}
