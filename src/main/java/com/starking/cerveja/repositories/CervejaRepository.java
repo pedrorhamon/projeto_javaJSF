@@ -11,4 +11,5 @@ public interface CervejaRepository extends JpaRepository<Cerveja, Long>, Cerveja
 	
 //	Optional<Cerveja> findBySkuIgnoreCase(String sku);
 
+	Cerveja findOne(Long codigoCerveja);
 }
