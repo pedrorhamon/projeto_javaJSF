@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.number.NumberStyleFormatter;
@@ -33,7 +34,6 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import org.springframework.data.repository.support.DomainClassConverter;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
@@ -43,13 +43,13 @@ import com.starking.cerveja.controllers.converters.CidadeConverter;
 import com.starking.cerveja.controllers.converters.EstadoConverter;
 import com.starking.cerveja.controllers.converters.EstiloConverter;
 import com.starking.cerveja.controllers.converters.GrupoConverter;
-import com.starking.cerveja.session.TabelaItensVenda;
+import com.starking.cerveja.session.TabelaItensSession;
 import com.starking.cerveja.thymeleaf.CervejaDialect;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
-@ComponentScan(basePackageClasses = {CervejaController.class, TabelaItensVenda.class})
+@ComponentScan(basePackageClasses = {CervejaController.class, TabelaItensSession.class})
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableCaching
