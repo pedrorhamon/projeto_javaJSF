@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.starking.cerveja.model.Cerveja;
+import com.starking.cerveja.repositories.CervejaRepository;
 import com.starking.cerveja.session.TabelaItensSession;
 
 @Controller
 @RequestMapping("/vendas")
 public class VendaController {
 	
-//	@Autowired
-//	private CervejaRepository cervejaRepository;
+	@Autowired
+	private CervejaRepository cervejaRepository;
 	
 	@Autowired
 	private TabelaItensSession tabelaItensSession;
@@ -33,7 +34,8 @@ public class VendaController {
 	}
 	
 	@PostMapping("/item")
-	public ModelAndView adicionarItem(Cerveja cerveja, String uuid) {
+	public ModelAndView adicionarItem(Long codigoCerveja, String uuid) {
+		Cerveja cerveja = this.cervejaRepository.findOne(codigoCerveja);
 		tabelaItensSession.adicionarItem(uuid, cerveja, 1);
 		return mvTabelaItensVendas(uuid);
 	}
