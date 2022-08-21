@@ -89,9 +89,13 @@ Cerveja.Security = (function() {
 	
 }());
 
-Cerveja.formatarMoeda = function(valor) {
 	numeral.language('pt-br');
+Cerveja.formatarMoeda = function(valor) {
 	return numeral(valor).format('0,0.00');
+}
+
+Cerveja.recuperarValor = function(valorFormatado) {
+	return numeral().unformat(valorFormatado);
 }
 
 $(function() {

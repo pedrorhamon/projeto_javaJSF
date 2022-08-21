@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.session.TabelaItensSession;
-import com.starking.cerveja.session.TabelaItensVenda;
 
 @Controller
 @RequestMapping("/vendas")
