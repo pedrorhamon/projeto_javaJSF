@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.starking.cerveja.config.security.UsuarioSystem;
 import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.controllers.validator.VendaValidator;
+import com.starking.cerveja.mail.Mailer;
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.Venda;
 import com.starking.cerveja.model.enums.StatusVenda;
@@ -53,6 +54,9 @@ public class VendaController {
 	
 	@Autowired
 	private VendaRepository vendaRepository;
+	
+	@Autowired
+	private Mailer mailer;
 	
 	@InitBinder("venda")
 	public void inicializarValidador(WebDataBinder binder) {
@@ -111,6 +115,7 @@ public class VendaController {
 		}
 		
 		venda.setUsuario(usuarioSistema.getUsuario());
+		mailer.enviar();
 		
 		this.vendaService.salvar(venda);
 		attributes.addFlashAttribute("mensagem", "Venda salva e e-mail enviado");
