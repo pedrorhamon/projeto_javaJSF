@@ -11,8 +11,8 @@
 	<packaging>war</packaging>
 
 	<properties>
-	
-   <maven.tomcat.useTestClasspath>true</maven.tomcat.useTestClasspath>
+
+		<maven.tomcat.useTestClasspath>true</maven.tomcat.useTestClasspath>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -63,11 +63,11 @@
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>
 
 		<spring-security-web.version>4.1.1.RELEASE</spring-security-web.version>
-		
+
 		<thymeleaf-extras-springsecurity.version>3.0.0.RELEASE</thymeleaf-extras-springsecurity.version>
-		
+
 		<junit.version>4.12</junit.version>
-		
+
 		<javax.mail.version>1.5.6</javax.mail.version>
 	</properties>
 
@@ -128,7 +128,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.version}</version>
-<!-- 			<scope>provided</scope> -->
+			<!-- <scope>provided</scope> -->
 		</dependency>
 
 		<!-- Thymeleaf -->
@@ -204,7 +204,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
-<!-- 			<scope>provided</scope> -->
+			<!-- <scope>provided</scope> -->
 		</dependency>
 
 		<!-- Spring Data JPA -->
@@ -265,34 +265,34 @@
 			<version>${spring-security-web.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring-security-web.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.thymeleaf.extras</groupId>
-		    <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-		    <version>${thymeleaf-extras-springsecurity.version}</version>
-		    <scope>compile</scope>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			<version>${thymeleaf-extras-springsecurity.version}</version>
+			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>${javax.mail.version}</version>
-            <scope>compile</scope>
-        </dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>${javax.mail.version}</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 </project>
