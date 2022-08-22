@@ -2,9 +2,11 @@ package com.starking.cerveja.controllers;
 
 import java.util.UUID;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -21,9 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.config.security.UsuarioSystem;
+import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.Venda;
+import com.starking.cerveja.model.enums.StatusVenda;
+import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.CervejaRepository;
+import com.starking.cerveja.repositories.VendaRepository;
+import com.starking.cerveja.repositories.filter.VendaFilter;
 import com.starking.cerveja.services.CadastroVendaService;
 import com.starking.cerveja.session.TabelaItensSession;
 import com.starking.cerveja.validation.VendaValidator;
@@ -43,6 +50,9 @@ public class VendaController {
 	
 	@Autowired
 	private VendaValidator vendaValidator;
+	
+	@Autowired
+	private VendaRepository vendaRepository;
 	
 	@InitBinder
 	public void inicializarValidador(WebDataBinder binder) {
@@ -125,6 +135,19 @@ public class VendaController {
 		this.tabelaItensSession.excluirItem(uuid, cerveja);
 		return mvTabelaItensVendas(uuid);
 	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(VendaFilter vendaFilter,
+			@PageableDefault(size = 3) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("/venda/PesquisaVendas");
+		mv.addObject("todosStatus", StatusVenda.values());
+		mv.addObject("tiposPessoa", TipoPessoa.values());
+		
+		PageWrapper<Venda> paginaWrapper = new PageWrapper<>(this.vendaRepository.filtrar(vendaFilter, pageable)
+				, httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+		return mv;
+	}
 
 	private ModelAndView mvTabelaItensVendas(String uuid) {
 		ModelAndView mv = new ModelAndView("venda/TabelaItensVenda");
@@ -139,5 +162,4 @@ public class VendaController {
 		
 		vendaValidator.validate(venda, result);
 	}
-
 }
