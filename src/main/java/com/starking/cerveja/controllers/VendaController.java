@@ -115,10 +115,11 @@ public class VendaController {
 		}
 		
 		venda.setUsuario(usuarioSistema.getUsuario());
+		
+		venda = this.vendaService.salvar(venda);
 		mailer.enviar(venda);
 		
-		this.vendaService.salvar(venda);
-		attributes.addFlashAttribute("mensagem", "Venda salva e e-mail enviado");
+		attributes.addFlashAttribute("mensagem", String.format("Venda nº %d salva com sucesso e e-mail enviado", venda.getCodigo()));
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
