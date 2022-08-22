@@ -64,22 +64,47 @@ public class VendaController {
 		return mv;
 	}
 	
-	@PostMapping("/nova")
-	public ModelAndView salvar(Venda venda, BindingResult result, RedirectAttributes atrAttributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
-		venda.adicionarItens(tabelaItensSession.getItens(venda.getUuid()));
-		venda.calcularValorTotal();
+	@PostMapping(value = "/nova", params = "salvar")
+	public ModelAndView salvar(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
 		
-		vendaValidator.validate(venda, result);
-		if(result.hasErrors()) {
-			return this.nova(venda);
+		validarVenda(venda, result);
+		if (result.hasErrors()) {
+			return nova(venda);
 		}
 		
 		venda.setUsuario(usuarioSystem.getUsuario());
-		venda.adicionarItens(tabelaItensSession.getItens(venda.getUuid()));
 		
-		this.vendaService.salvar(venda);
-		atrAttributes.addFlashAttribute("mensagem", "Venda salva com sucesso");
-		return new ModelAndView("redirect:/venda/nova");
+		vendaService.salvar(venda);
+		attributes.addFlashAttribute("mensagem", "Venda salva com sucesso");
+		return new ModelAndView("redirect:/vendas/nova");
+	}
+
+	@PostMapping(value = "/nova", params = "emitir")
+	public ModelAndView emitir(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
+		validarVenda(venda, result);
+		if (result.hasErrors()) {
+			return nova(venda);
+		}
+		
+		venda.setUsuario(usuarioSystem.getUsuario());
+		
+		vendaService.emitir(venda);
+		attributes.addFlashAttribute("mensagem", "Venda emitida com sucesso");
+		return new ModelAndView("redirect:/vendas/nova");
+	}
+	
+	@PostMapping(value = "/nova", params = "enviarEmail")
+	public ModelAndView enviarEmail(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
+		validarVenda(venda, result);
+		if (result.hasErrors()) {
+			return nova(venda);
+		}
+		
+		venda.setUsuario(usuarioSystem.getUsuario());
+		
+		vendaService.salvar(venda);
+		attributes.addFlashAttribute("mensagem", "Venda salva e e-mail enviado");
+		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
 	@PostMapping("/item")
@@ -106,6 +131,13 @@ public class VendaController {
 		mv.addObject("itens", tabelaItensSession.getItens(uuid));
 		mv.addObject("valorTotal", tabelaItensSession.getValorTotal(uuid));
 		return mv;
+	}
+	
+	private void validarVenda(Venda venda, BindingResult result) {
+		venda.adicionarItens(tabelaItensSession.getItens(venda.getUuid()));
+		venda.calcularValorTotal();
+		
+		vendaValidator.validate(venda, result);
 	}
 
 }
