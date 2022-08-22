@@ -105,4 +105,15 @@ public class FotoStorageLocal implements FotoStorage {
 			throw new RuntimeException("Erro lendo a foto", e);
 		}
 	}
+
+	@Override
+	public String thumbnailPrefix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public byte[] recuperarThumbnail(String fotoCerveja) {
+		return recuperar("thumbnail." + fotoCerveja);
+	}
 }

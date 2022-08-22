@@ -10,6 +10,9 @@ public interface FotoStorage  {
 
 	void salvar(String foto);
 
-	public byte[] recuperar(String nome);
+	byte[] recuperar(String nome);
 	
+	String thumbnailPrefix();
+
+	byte[] recuperarThumbnail(String string);
 }
