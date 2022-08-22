@@ -8,6 +8,7 @@ import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.starking.cerveja.config.JPAConfig;
+import com.starking.cerveja.config.MailConfig;
 import com.starking.cerveja.config.SecurityConfig;
 import com.starking.cerveja.config.ServiceConfig;
 import com.starking.cerveja.config.WebConfig;
@@ -21,7 +22,7 @@ public class AppInicializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] {WebConfig.class};
+		return new Class<?>[] {WebConfig.class, MailConfig.class};
 	}
 
 	@Override

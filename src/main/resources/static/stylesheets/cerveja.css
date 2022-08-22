@@ -12,6 +12,7 @@
 }
 
 
+
 /*
 ######################
 # COMPONENTES
@@ -97,7 +98,7 @@
 }
 
 .table-cervejas-col-nome {
-	width: 140px;
+	
 }
 
 .table-cervejas-col-estilo {
@@ -124,7 +125,7 @@
 
 /* Colunas - Pesquisa de Clientes */
 .table-clientes-col-nome {
-	width: 140px;
+	
 }
 
 .table-clientes-col-tipo-pessoa {
@@ -149,7 +150,7 @@
 
 /* Colunas - Pesquisa de cidades */
 .table-cidades-col-nome {
-	width: 140px;
+	
 }
 
 .table-cidades-col-estado {
@@ -199,6 +200,11 @@
 .easy-autocomplete-container ul li {
 	font-size: 1em !important;
 	padding: 0px 5px !important;
+}
+
+/* Box */
+.negativo .aw-box__value {
+	color: red;
 }
 
 /* Tabela Item */

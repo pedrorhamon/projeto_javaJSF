@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.config.security.UsuarioSystem;
 import com.starking.cerveja.controllers.page.PageWrapper;
+import com.starking.cerveja.controllers.validator.VendaValidator;
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.Venda;
 import com.starking.cerveja.model.enums.StatusVenda;
@@ -33,7 +34,6 @@ import com.starking.cerveja.repositories.VendaRepository;
 import com.starking.cerveja.repositories.filter.VendaFilter;
 import com.starking.cerveja.services.CadastroVendaService;
 import com.starking.cerveja.session.TabelaItensSession;
-import com.starking.cerveja.validation.VendaValidator;
 
 @Controller
 @RequestMapping("/vendas")
@@ -43,7 +43,7 @@ public class VendaController {
 	private CervejaRepository cervejaRepository;
 	
 	@Autowired
-	private TabelaItensSession tabelaItensSession;
+	private TabelaItensSession tabelaItens;
 	
 	@Autowired
 	private CadastroVendaService vendaService;
@@ -54,7 +54,7 @@ public class VendaController {
 	@Autowired
 	private VendaRepository vendaRepository;
 	
-	@InitBinder
+	@InitBinder("venda")
 	public void inicializarValidador(WebDataBinder binder) {
 		binder.setValidator(vendaValidator);
 	}
@@ -63,77 +63,79 @@ public class VendaController {
 	public ModelAndView nova(Venda venda) {
 		ModelAndView mv = new ModelAndView("venda/CadastroVenda");
 		
-		if(StringUtils.isEmpty(venda.getUuid())) {			
-			mv.addObject("uuid", UUID.randomUUID().toString());
+		if (StringUtils.isEmpty(venda.getUuid())) {
+			venda.setUuid(UUID.randomUUID().toString());
 		}
 		
 		mv.addObject("itens", venda.getItens());
 		mv.addObject("valorFrete", venda.getValorFrete());
 		mv.addObject("valorDesconto", venda.getValorDesconto());
-		mv.addObject("valorTotalItens", tabelaItensSession.getValorTotal(venda.getUuid()));
+		mv.addObject("valorTotalItens", tabelaItens.getValorTotal(venda.getUuid()));
+		
 		return mv;
 	}
 	
 	@PostMapping(value = "/nova", params = "salvar")
-	public ModelAndView salvar(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
-		
+	public ModelAndView salvar(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSistema) {
 		validarVenda(venda, result);
 		if (result.hasErrors()) {
 			return nova(venda);
 		}
 		
-		venda.setUsuario(usuarioSystem.getUsuario());
+		venda.setUsuario(usuarioSistema.getUsuario());
 		
-		vendaService.salvar(venda);
+		this.vendaService.salvar(venda);
 		attributes.addFlashAttribute("mensagem", "Venda salva com sucesso");
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 
 	@PostMapping(value = "/nova", params = "emitir")
-	public ModelAndView emitir(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
+	public ModelAndView emitir(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSistema) {
 		validarVenda(venda, result);
 		if (result.hasErrors()) {
 			return nova(venda);
 		}
 		
-		venda.setUsuario(usuarioSystem.getUsuario());
+		venda.setUsuario(usuarioSistema.getUsuario());
 		
-		vendaService.emitir(venda);
+		this.vendaService.emitir(venda);
 		attributes.addFlashAttribute("mensagem", "Venda emitida com sucesso");
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
 	@PostMapping(value = "/nova", params = "enviarEmail")
-	public ModelAndView enviarEmail(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSystem) {
+	public ModelAndView enviarEmail(Venda venda, BindingResult result, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSystem usuarioSistema) {
 		validarVenda(venda, result);
 		if (result.hasErrors()) {
 			return nova(venda);
 		}
 		
-		venda.setUsuario(usuarioSystem.getUsuario());
+		venda.setUsuario(usuarioSistema.getUsuario());
 		
-		vendaService.salvar(venda);
+		this.vendaService.salvar(venda);
 		attributes.addFlashAttribute("mensagem", "Venda salva e e-mail enviado");
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
 	@PostMapping("/item")
-	public ModelAndView adicionarItem(Long codigoCerveja, String uuid) {
-		Cerveja cerveja = this.cervejaRepository.findOne(codigoCerveja);
-		tabelaItensSession.adicionarItem(uuid, cerveja, 1);
-		return mvTabelaItensVendas(uuid);
+	public ModelAndView adicionarItem(Long id, String uuid) {
+		Cerveja cerveja = this.cervejaRepository.findOne(id);
+		tabelaItens.adicionarItem(uuid, cerveja, 1);
+		return mvTabelaItensVenda(uuid);
 	}
 	
 	@PutMapping("/item/{id}")
-	public ModelAndView alterarQuantidadeItem(@PathVariable("id") Cerveja cerveja, Integer quantidade, String uuid) {
-		this.tabelaItensSession.alterarQuantidadeItens(uuid, cerveja, quantidade);
-		return mvTabelaItensVendas(uuid);
+	public ModelAndView alterarQuantidadeItem(@PathVariable("id") Cerveja cerveja
+			, Integer quantidade, String uuid) {
+		tabelaItens.alterarQuantidadeItens(uuid, cerveja, quantidade);
+		return mvTabelaItensVenda(uuid);
 	}
 	
 	@DeleteMapping("/item/{uuid}/{id}")
-	public ModelAndView excluirItem(@PathVariable("id") Cerveja cerveja, @PathVariable String uuid) {
-		this.tabelaItensSession.excluirItem(uuid, cerveja);
-		return mvTabelaItensVendas(uuid);
+	public ModelAndView excluirItem(@PathVariable("id") Cerveja cerveja
+			, @PathVariable String uuid) {
+		tabelaItens.excluirItem(uuid, cerveja);
+		return mvTabelaItensVenda(uuid);
 	}
 	
 	@GetMapping
@@ -148,16 +150,16 @@ public class VendaController {
 		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
-
-	private ModelAndView mvTabelaItensVendas(String uuid) {
+	
+	private ModelAndView mvTabelaItensVenda(String uuid) {
 		ModelAndView mv = new ModelAndView("venda/TabelaItensVenda");
-		mv.addObject("itens", tabelaItensSession.getItens(uuid));
-		mv.addObject("valorTotal", tabelaItensSession.getValorTotal(uuid));
+		mv.addObject("itens", tabelaItens.getItens(uuid));
+		mv.addObject("valorTotal", tabelaItens.getValorTotal(uuid));
 		return mv;
 	}
 	
 	private void validarVenda(Venda venda, BindingResult result) {
-		venda.adicionarItens(tabelaItensSession.getItens(venda.getUuid()));
+		venda.adicionarItens(tabelaItens.getItens(venda.getUuid()));
 		venda.calcularValorTotal();
 		
 		vendaValidator.validate(venda, result);
