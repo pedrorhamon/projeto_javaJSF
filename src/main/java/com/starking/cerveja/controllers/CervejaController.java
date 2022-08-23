@@ -55,7 +55,7 @@ public class CervejaController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/novo", method = RequestMethod.POST)
+	@RequestMapping(value = {"/novo", "{\\d+}"}, method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novo(cerveja);
@@ -95,4 +95,11 @@ public class CervejaController {
 		}	
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/{id}")
+	public ModelAndView editar(@PathVariable("id") Cerveja cerveja) {
+		ModelAndView mv = this.novo(cerveja);
+		mv.addObject(cerveja);
+		return mv;
+	}	
 }

@@ -72,6 +72,9 @@ public class Cerveja {
 	private void prevPersistUpdate() {
 		sku = sku.toUpperCase();
 	}
+	
+	@Transient
+	private boolean novaFoto;
 
 	public Long getId() {
 		return id;
@@ -181,8 +184,20 @@ public class Cerveja {
 		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
 	}
 	
+	public boolean isNovaFoto() {
+		return novaFoto;
+	}
+
+	public void setNovaFoto(boolean novaFoto) {
+		this.novaFoto = novaFoto;
+	}
+
 	public boolean temFoto() {
 		return !StringUtils.isEmpty(this.foto);
+	}
+	
+	public boolean isNova() {
+		return id == null;
 	}
 
 	@Override
