@@ -16,10 +16,11 @@ public class SecurityInitializer extends AbstractSecurityWebApplicationInitializ
 //		servletContext.getSessionCookieConfig().setMaxAge(20);
 		servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
 		
-		FilterRegistration chFilterRegistrationFilter = servletContext.addFilter("encodingFilter", new CharacterEncodingFilter());
-		chFilterRegistrationFilter.setInitParameter("encoding", "UTF-8");
-		chFilterRegistrationFilter.setInitParameter("forceEncoding", "true");
-		chFilterRegistrationFilter.addMappingForServletNames(null, false, "/*");
+		FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("encodingFilter",
+				new CharacterEncodingFilter());
+		characterEncodingFilter.setInitParameter("encoding", "UTF-8");
+		characterEncodingFilter.setInitParameter("forceEncoding", "true");
+		characterEncodingFilter.addMappingForUrlPatterns(null, false, "/*");
 	}
 
 }

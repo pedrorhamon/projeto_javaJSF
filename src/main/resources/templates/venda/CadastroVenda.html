@@ -32,6 +32,7 @@
 		
 			<input type="hidden" id="uuid" th:field="*{uuid}"/>
 			<input type="hidden" th:field="*{codigo}"/>
+			<input type="hidden" th:field="*{usuario}"/>
 			
 			<div class="row">
 				<div class="col-sm-4">
@@ -165,7 +166,7 @@
 					  </ul>
 					</div>
 				
-					<button class="btn  btn-danger" th:url="@{/vendas.*}">Cancelar</button>
+					<button class="btn  btn-danger  js-submit-btn" data:acao="cancelar" th:unless="${venda.nova}">Cancelar</button>
 				</div>
 			</div>
 		</form>
