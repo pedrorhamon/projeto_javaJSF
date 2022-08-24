@@ -27,6 +27,7 @@ import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.controllers.validator.VendaValidator;
 import com.starking.cerveja.mail.Mailer;
 import com.starking.cerveja.model.Cerveja;
+import com.starking.cerveja.model.ItemVenda;
 import com.starking.cerveja.model.Venda;
 import com.starking.cerveja.model.enums.StatusVenda;
 import com.starking.cerveja.model.enums.TipoPessoa;
@@ -67,9 +68,7 @@ public class VendaController {
 	public ModelAndView nova(Venda venda) {
 		ModelAndView mv = new ModelAndView("venda/CadastroVenda");
 		
-		if (StringUtils.isEmpty(venda.getUuid())) {
-			venda.setUuid(UUID.randomUUID().toString());
-		}
+		this.setUuid(venda);
 		
 		mv.addObject("itens", venda.getItens());
 		mv.addObject("valorFrete", venda.getValorFrete());
@@ -157,6 +156,21 @@ public class VendaController {
 		return mv;
 	}
 	
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable Long codigo) {
+		Venda venda = this.vendaRepository.buscarComItens(codigo);
+		
+		this.setUuid(venda);
+		for(ItemVenda item : venda.getItens()) {
+			this.tabelaItens.adicionarItem(venda.getUuid(), item.getCerveja(), item.getQuantidade());
+		}
+		
+		ModelAndView mv = this.nova(venda);
+		mv.addObject(venda);
+		return mv;
+		
+	}
+	
 	private ModelAndView mvTabelaItensVenda(String uuid) {
 		ModelAndView mv = new ModelAndView("venda/TabelaItensVenda");
 		mv.addObject("itens", tabelaItens.getItens(uuid));
@@ -169,5 +183,11 @@ public class VendaController {
 		venda.calcularValorTotal();
 		
 		vendaValidator.validate(venda, result);
+	}
+	
+	private void setUuid(Venda venda) {
+		if (StringUtils.isEmpty(venda.getUuid())) {
+			venda.setUuid(UUID.randomUUID().toString());
+		}
 	}
 }
