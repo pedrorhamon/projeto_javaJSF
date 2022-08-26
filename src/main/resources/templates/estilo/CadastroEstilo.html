@@ -15,7 +15,7 @@
 			<div class="row">
 				<div class="col-xs-10">
 					<h1 th:if="${estilo.nova}">Cadastro de estilo</h1>
-					<h1 th:unless="${estilo.nova}" th:text="|Edição de ${estilo.nome}|">Edição de estilo</h1>
+					<h1 th:unless="${estilo.nova}">Edição de estilo [[${estilo.id}]]</h1>
 				</div>
 
 				<div class="col-xs-2">
@@ -33,7 +33,7 @@
 	<div class="container-fluid">
 		<th:block th:include="fragments/MensagensSucesso"></th:block>
 
-		<form method="POST" th:object="${estilo}" th:action="${estilo.novo} ? @{/estilos/novo} : @{/estilos/{id}(id=${estilo.id})}">
+		<form method="POST" th:object="${estilo}" th:action="${estilo.nova} ? @{/estilos/novo} : @{/estilos/{id}(id=${estilo.id})}">
 			<th:block th:include="fragments/MensagensErroValidacao"></th:block>
 			
 			<input type="hidden" th:field="*{id}"/>

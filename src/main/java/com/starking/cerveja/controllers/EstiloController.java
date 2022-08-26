@@ -85,7 +85,7 @@ public class EstiloController {
 	
 	@GetMapping("/{id}")
 	public ModelAndView editar(@PathVariable("id") Estilo estilo) {
-		ModelAndView mv = novo(estilo);
+		ModelAndView mv = this.novo(estilo);
 		mv.addObject(estilo);
 		return mv;
 	}
