@@ -2,6 +2,8 @@ package com.starking.cerveja.services;
 
 import java.util.Optional;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.starking.cerveja.exception.EmailUsuarioJaCadastradoException;
+import com.starking.cerveja.exception.ImpossivelExcluirEntidadeException;
 import com.starking.cerveja.exception.SenhaObrigatoriaException;
 import com.starking.cerveja.model.Usuario;
 import com.starking.cerveja.model.enums.StatusUsuario;
@@ -50,5 +53,15 @@ public class CadastrarUsuarioService {
 	@Transactional
 	public void alterarStatus(Long[] codigos, StatusUsuario status) {
 		status.executar(codigos, usuarioRepository);
+	}
+
+	@Transactional
+	public void excluir(Usuario usuario) {
+		try {
+			this.usuarioRepository.delete(usuario);
+			this.usuarioRepository.flush();
+		}catch(PersistenceException e) {
+			throw new ImpossivelExcluirEntidadeException("Impossivel excluir usuario está atrelado ao sistema");
+		}
 	}
 }

@@ -67,7 +67,7 @@ Cerveja.ComboCidade = (function() {
 		this.combo.removeAttr('disabled');
 		
 		var codigoCidadeSelecionada = this.inputHiddenCidadeSelecionada.val();
-		if(codigoCidadeSelecionada) {
+		if (codigoCidadeSelecionada) {
 			this.combo.val(codigoCidadeSelecionada);
 		}
 	}

@@ -2,7 +2,6 @@ package com.starking.cerveja.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,18 +45,21 @@ public class Estilo implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
 	
 	public List<Cerveja> getCervejas() {
 		return cervejas;
 	}
+	
+	public boolean isNova() {
+		return this.id == null;
+	}
 
-	public void setCervejas(List<Cerveja> cervejas) {
-		this.cervejas = cervejas;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -69,6 +71,12 @@ public class Estilo implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Estilo other = (Estilo) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
+
 }

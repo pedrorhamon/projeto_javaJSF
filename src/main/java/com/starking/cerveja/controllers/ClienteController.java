@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.cerveja.controllers.page.PageWrapper;
 import com.starking.cerveja.exception.CpfClienteJaCadastradoException;
+import com.starking.cerveja.exception.ImpossivelExcluirEntidadeException;
 import com.starking.cerveja.model.Cliente;
 import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.ClienteRepository;
@@ -94,5 +97,15 @@ public class ClienteController {
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<Void> tratarIllegalException(IllegalArgumentException e) {
 		return ResponseEntity.badRequest().build();
+	}
+	
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<?> excluir(@PathVariable("codigo") Cliente cliente) {
+		try {
+			this.clienteService.excluir(cliente);
+		} catch(ImpossivelExcluirEntidadeException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		return ResponseEntity.ok().build();
 	}
 }
