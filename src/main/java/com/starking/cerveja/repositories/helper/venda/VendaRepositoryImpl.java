@@ -27,6 +27,7 @@ import org.springframework.util.StringUtils;
 
 import com.starking.cerveja.model.Venda;
 import com.starking.cerveja.model.VendaMes;
+import com.starking.cerveja.model.VendaOrigem;
 import com.starking.cerveja.model.enums.StatusVenda;
 import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.filter.VendaFilter;
@@ -156,5 +157,24 @@ public class VendaRepositoryImpl implements VendaRepositoryQueries {
 		}
 		
 		return vendasMes;
+	}
+	
+	@Override
+	public List<VendaOrigem> totalPorOrigem() {
+		List<VendaOrigem> vendasNacionalidade = manager.createNamedQuery("Vendas.porOrigem", VendaOrigem.class).getResultList();
+		
+		LocalDate now = LocalDate.now();
+		for (int i = 1; i <= 6; i++) {
+			String mesIdeal = String.format("%d/%02d", now.getYear(), now.getMonth().getValue());
+			
+			boolean possuiMes = vendasNacionalidade.stream().filter(v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
+			if (!possuiMes) {
+				vendasNacionalidade.add(i - 1, new VendaOrigem(mesIdeal, 0, 0));
+			}
+			
+			now = now.minusMonths(1);
+		}
+		
+		return vendasNacionalidade;
 	}
 }

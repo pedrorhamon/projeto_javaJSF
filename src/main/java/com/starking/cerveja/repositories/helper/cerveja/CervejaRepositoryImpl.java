@@ -97,7 +97,7 @@ public class CervejaRepositoryImpl implements CervejaRepositoryQueries {
 
 	@Override
 	public ValorItensEstoque valorItensEstoque() {
-		String query = "select new com.starking.cerveka.ValorItensEstoque(sum(valor * quantidadeEstoque), sum(quantidadeEstoque)) from Cerveja";
+		String query = "select new com.starking.cerveja.model.ValorItensEstoque(sum(valor * quantidadeEstoque), sum(quantidadeEstoque)) from Cerveja";
 		return manager.createQuery(query, ValorItensEstoque.class).getSingleResult();
 	}
 }

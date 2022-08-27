@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.starking.cerveja.model.Venda;
 import com.starking.cerveja.model.VendaMes;
+import com.starking.cerveja.model.VendaOrigem;
 import com.starking.cerveja.repositories.filter.VendaFilter;
 
 public interface VendaRepositoryQueries {
@@ -23,4 +24,6 @@ public interface VendaRepositoryQueries {
 	BigDecimal valorTicketMedioNoAno();
 	
 	List<VendaMes> totalPorMes();
+	
+	List<VendaOrigem> totalPorOrigem();
 }

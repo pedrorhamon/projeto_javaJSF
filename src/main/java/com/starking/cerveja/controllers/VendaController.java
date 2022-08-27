@@ -33,6 +33,7 @@ import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.ItemVenda;
 import com.starking.cerveja.model.Venda;
 import com.starking.cerveja.model.VendaMes;
+import com.starking.cerveja.model.VendaOrigem;
 import com.starking.cerveja.model.enums.StatusVenda;
 import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.CervejaRepository;
@@ -190,6 +191,11 @@ public class VendaController {
 	@GetMapping("/totalPorMes")
 	public @ResponseBody List<VendaMes> listarTotalVendaPorMes() {
 		return this.vendaRepository.totalPorMes();
+	}
+	
+	@GetMapping("/porOrigem")
+	public @ResponseBody List<VendaOrigem> vendasPorNacionalidade() {
+		return this.vendaRepository.totalPorOrigem();
 	}
 	
 	private ModelAndView mvTabelaItensVenda(String uuid) {
