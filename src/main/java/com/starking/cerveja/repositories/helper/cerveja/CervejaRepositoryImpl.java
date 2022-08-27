@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.starking.cerveja.model.Cerveja;
+import com.starking.cerveja.model.ValorItensEstoque;
 import com.starking.cerveja.model.dto.CervejaDTO;
 import com.starking.cerveja.repositories.filter.CervejaFilter;
 import com.starking.cerveja.repositories.paginacao.PaginacaoUtil;
@@ -92,5 +93,11 @@ public class CervejaRepositoryImpl implements CervejaRepositoryQueries {
 					.setParameter("skuOuNome", skuOuNome + "%")
 					.getResultList();
 		return cervejasFiltradas;
+	}
+
+	@Override
+	public ValorItensEstoque valorItensEstoque() {
+		String query = "select new com.starking.cerveka.ValorItensEstoque(sum(valor * quantidadeEstoque), sum(quantidadeEstoque)) from Cerveja";
+		return manager.createQuery(query, ValorItensEstoque.class).getSingleResult();
 	}
 }
