@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.starking.cerveja.repositories.CervejaRepository;
+import com.starking.cerveja.repositories.ClienteRepository;
 import com.starking.cerveja.repositories.VendaRepository;
 
 @Controller
@@ -17,6 +18,9 @@ public class DashboardController {
 	@Autowired
 	private CervejaRepository cervejaRepository;
 	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 
 	@GetMapping("/")
 	public ModelAndView dashboard() {
@@ -27,7 +31,7 @@ public class DashboardController {
 		mv.addObject("ticketMedio", this.vendaRepository.valorTicketMedioNoAno());
 		
 		mv.addObject("valorItensEstoque", this.cervejaRepository.valorItensEstoque());
-		mv.addObject("totalClientes", this.cervejaRepository.count());
+		mv.addObject("totalClientes", this.clienteRepository.count());
 		
 		return mv;
 	}
