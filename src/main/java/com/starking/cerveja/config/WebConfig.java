@@ -19,7 +19,6 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
-import org.springframework.format.number.NumberStyleFormatter;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -39,6 +38,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 import com.google.common.cache.CacheBuilder;
+import com.starking.cerveja.config.format.BigDecimalFormatter;
 import com.starking.cerveja.controllers.CervejaController;
 import com.starking.cerveja.controllers.converters.CidadeConverter;
 import com.starking.cerveja.controllers.converters.EstadoConverter;
@@ -107,10 +107,12 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		cs.addConverter(new EstadoConverter());
 		cs.addConverter(new GrupoConverter());
 		
-		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
+//		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
+		BigDecimalFormatter bigDecimalFormatter = new BigDecimalFormatter("#,##0.00");
 		cs.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
 		
-		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#,##0");
+//		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#,##0");
+		BigDecimalFormatter integerFormatter = new BigDecimalFormatter("#,##0");
 		cs.addFormatterForFieldType(Integer.class, integerFormatter);
 		
 		DateTimeFormatterRegistrar formatterRegistrar = new DateTimeFormatterRegistrar();
