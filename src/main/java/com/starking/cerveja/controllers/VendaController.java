@@ -1,5 +1,6 @@
 package com.starking.cerveja.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,6 +32,7 @@ import com.starking.cerveja.mail.Mailer;
 import com.starking.cerveja.model.Cerveja;
 import com.starking.cerveja.model.ItemVenda;
 import com.starking.cerveja.model.Venda;
+import com.starking.cerveja.model.VendaMes;
 import com.starking.cerveja.model.enums.StatusVenda;
 import com.starking.cerveja.model.enums.TipoPessoa;
 import com.starking.cerveja.repositories.CervejaRepository;
@@ -182,6 +185,11 @@ public class VendaController {
 		
 		attributes.addFlashAttribute("mensagem", "Venda cancelada com sucesso");
 		return new ModelAndView("redirect:/vendas/" + venda.getCodigo());
+	}
+	
+	@GetMapping("/totalPorMes")
+	public @ResponseBody List<VendaMes> listarTotalVendaPorMes() {
+		return this.vendaRepository.totalPorMes();
 	}
 	
 	private ModelAndView mvTabelaItensVenda(String uuid) {
