@@ -19,7 +19,6 @@ public class AtributoConfirmarValidator implements ConstraintValidator<AtributoC
 		this.atributoConfirmacao = constraintAnnotation.atributoConfirmacao();
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		boolean isValido = false;
