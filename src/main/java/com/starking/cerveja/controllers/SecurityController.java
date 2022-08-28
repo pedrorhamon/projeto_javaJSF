@@ -13,7 +13,6 @@ public class SecurityController {
 		if (user != null) {
 			return "redirect:/cervejas";
 		}
-		
 		return "Login";
 	}
 	
